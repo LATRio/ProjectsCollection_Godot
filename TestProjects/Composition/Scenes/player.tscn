@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cd74sktarywx8"]
 
-[ext_resource type="Script" uid="uid://dlvaoag41plb2" path="res://TestProjects/Composition/Scenes/player.gd" id="1_lfm6e"]
-[ext_resource type="Script" uid="uid://kxveoau07ry3" path="res://TestProjects/Composition/Components/input_component.gd" id="2_6khwd"]
+[ext_resource type="Script" uid="uid://t7bld6ypolc8" path="res://TestProjects/Composition/Scenes/player.gd" id="1_lfm6e"]
+[ext_resource type="Script" uid="uid://c6ls05yx843ck" path="res://TestProjects/Composition/Components/input_component.gd" id="2_6khwd"]
 [ext_resource type="PackedScene" uid="uid://bobn4iq38d2wg" path="res://TestProjects/Composition/Components/third_person_camera_component.tscn" id="3_dbimi"]
-[ext_resource type="Script" uid="uid://cpli6hlnimxby" path="res://TestProjects/Composition/Components/movement_component.gd" id="4_2jssq"]
-[ext_resource type="Script" uid="uid://b3ioa7a451wvd" path="res://TestProjects/Composition/Components/health_component.gd" id="5_kvjfl"]
+[ext_resource type="Script" uid="uid://qn6fhrwvh4v5" path="res://TestProjects/Composition/Components/movement_component.gd" id="4_2jssq"]
+[ext_resource type="Script" uid="uid://s2npqkkticrm" path="res://TestProjects/Composition/Components/health_component.gd" id="5_kvjfl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dbimi"]
 radius = 0.3
@@ -29,18 +29,15 @@ spring_length = 4.0
 [node name="InputComponent" type="Node" parent="." unique_id=208159146]
 unique_name_in_owner = true
 script = ExtResource("2_6khwd")
-metadata/_custom_type_script = "uid://kxveoau07ry3"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=737083795 node_paths=PackedStringArray("body")]
 unique_name_in_owner = true
 script = ExtResource("4_2jssq")
 body = NodePath("..")
 speed = 4.0
-metadata/_custom_type_script = "uid://cpli6hlnimxby"
 
 [node name="HealthComponent" type="Node" parent="." unique_id=2085628982]
 unique_name_in_owner = true
 script = ExtResource("5_kvjfl")
-metadata/_custom_type_script = "uid://b3ioa7a451wvd"
 
 [editable path="ThirdPersonCameraComponent"]

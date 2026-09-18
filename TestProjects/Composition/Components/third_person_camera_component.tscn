@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bobn4iq38d2wg"]
 
-[ext_resource type="Script" uid="uid://capw7teykfg1i" path="res://TestProjects/Composition/Components/third_person_camera_component.gd" id="1_snni0"]
+[ext_resource type="Script" uid="uid://ue4taj25e44v" path="res://TestProjects/Composition/Components/third_person_camera_component.gd" id="1_snni0"]
 
 [node name="ThirdPersonCameraComponent" type="Node3D" unique_id=165318792]
 script = ExtResource("1_snni0")
