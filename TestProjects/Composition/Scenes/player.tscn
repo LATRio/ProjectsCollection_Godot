@@ -6,6 +6,10 @@
 [ext_resource type="Script" uid="uid://qn6fhrwvh4v5" path="res://TestProjects/Composition/Components/movement_component.gd" id="4_2jssq"]
 [ext_resource type="Script" uid="uid://s2npqkkticrm" path="res://TestProjects/Composition/Components/health_component.gd" id="5_kvjfl"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_pntbq"]
+radius = 0.3
+height = 1.789
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dbimi"]
 radius = 0.3
 height = 1.789414
@@ -14,8 +18,12 @@ height = 1.789414
 collision_layer = 2
 script = ExtResource("1_lfm6e")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1592783622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895, 0)
+mesh = SubResource("CapsuleMesh_pntbq")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1801946993]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.896215, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895, 0)
 shape = SubResource("CapsuleShape3D_dbimi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1662916415]
