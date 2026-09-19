@@ -32,6 +32,8 @@ func _physics_process(delta: float) -> void:
 	if input_component.hurt_pressed:
 		health_component.damage(10.0)
 	if input_component.interact_pressed:
+		# TODO: Interact when there's something to interact with
+		# TODO: Add a visual indicator on which item will be interacted with
 		try_to_interact()
 	if input_component.track_me_pressed:
 		var enemy := get_tree().get_first_node_in_group("Enemies") as Enemy
@@ -44,5 +46,4 @@ func _player_died() -> void:
 
 
 func try_to_interact() -> void:
-	var interactible := interactor_component.get_first_overlapping_interactible()
-	interactible.pickup()
+	interactor_component.interact_with_first_overlapping_interactable()

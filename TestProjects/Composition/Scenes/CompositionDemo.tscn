@@ -66,10 +66,11 @@ mesh = SubResource("BoxMesh_pntbq")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Level/MeshInstance3D2/StaticBody3D" unique_id=810654752]
 shape = SubResource("ConcavePolygonShape3D_1qkwt")
 
-[node name="Player" parent="NavigationRegion3D" unique_id=1090884800 instance=ExtResource("1_1qkwt")]
+[node name="PickableItem" parent="." unique_id=1290967800 instance=ExtResource("3_gs4el")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.519894, 0.025, -2.9507644)
 
-[node name="Enemy" parent="NavigationRegion3D" unique_id=1543108756 instance=ExtResource("2_vi70s")]
+[node name="Enemy" parent="." unique_id=1543108756 instance=ExtResource("2_vi70s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8524551, 2.3841858e-07, -4.9247403)
 
-[node name="PickableItem" parent="NavigationRegion3D" unique_id=1290967800 instance=ExtResource("3_gs4el")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.519894, 0.025, -2.9507644)
+[node name="Player" parent="." unique_id=1090884800 instance=ExtResource("1_1qkwt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0561101)
