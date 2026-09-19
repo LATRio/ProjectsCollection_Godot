@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://h1h5kooapabs"]
+
+[ext_resource type="Script" uid="uid://cg3168re5k2ln" path="res://TestProjects/Composition/Scenes/enemy.gd" id="1_ik2m1"]
+[ext_resource type="Script" uid="uid://qn6fhrwvh4v5" path="res://TestProjects/Composition/Components/movement_component.gd" id="2_e82u0"]
+[ext_resource type="Script" uid="uid://s2npqkkticrm" path="res://TestProjects/Composition/Components/health_component.gd" id="3_qodjt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ly7sk"]
+radius = 0.3
+height = 1.789
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hjplf"]
+albedo_color = Color(1, 0.1287576, 0.07650435, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ik2m1"]
+radius = 0.3
+height = 1.789414
+
+[node name="Enemy" type="CharacterBody3D" unique_id=1543108756 groups=["Enemies"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_ik2m1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=727220845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895, 0)
+mesh = SubResource("CapsuleMesh_ly7sk")
+surface_material_override/0 = SubResource("StandardMaterial3D_hjplf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=780869077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895, 0)
+shape = SubResource("CapsuleShape3D_ik2m1")
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1504143629 node_paths=PackedStringArray("body")]
+unique_name_in_owner = true
+script = ExtResource("2_e82u0")
+body = NodePath("..")
+metadata/_custom_type_script = "uid://qn6fhrwvh4v5"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1140802132]
+unique_name_in_owner = true
+script = ExtResource("3_qodjt")
+metadata/_custom_type_script = "uid://s2npqkkticrm"
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=539737375]
+unique_name_in_owner = true
+path_desired_distance = 0.5
+target_desired_distance = 0.1
+debug_enabled = true
+debug_path_custom_color = Color(1, 0, 0.0143585205, 1)
+
+[connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
+[connection signal="path_changed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_path_changed"]

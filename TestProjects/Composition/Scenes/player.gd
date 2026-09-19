@@ -30,6 +30,10 @@ func _physics_process(delta: float) -> void:
 		health_component.heal(5.0)
 	if input_component.hurt_pressed:
 		health_component.damage(10.0)
+	if input_component.track_me_pressed:
+		var enemy := get_tree().get_first_node_in_group("Enemies") as Enemy
+		print("Telling enemy to move")
+		enemy.navigation_agent_3d.target_position = global_position
 
 
 func _player_died() -> void:

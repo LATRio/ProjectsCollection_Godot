@@ -6,7 +6,7 @@ extends Node
 
 @export var body: CharacterBody3D
 @export var model: Node3D
-@export var speed := 8.0
+@export var speed := 4.0
 @export var jump_velocity := 12.0
 @export var gravity_multiplier := 3.0
 
@@ -15,6 +15,7 @@ var camera_forward := Vector3.ZERO
 var camera_right := Vector3.ZERO
 var wants_jump := false
 
+var needs_to_move := false
 
 func tick(delta: float) -> void:
 	if not body:
@@ -46,8 +47,8 @@ func tick(delta: float) -> void:
 
 # Utility movement function. Useful for cutscenes or NPCs
 func move_towards_position(target_pos: Vector3) -> void:
-	# Placeholder
-	pass
+	var target_dir := target_pos - body.global_position
+	move_dir = Vector2(target_dir.x, target_dir.z)
 
 
 # Utility model function. Useful if model needs to lock onto something.
