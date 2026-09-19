@@ -2,6 +2,7 @@
 *.gen.*
 .godot/
 /android/
+exports/
 
 # Ignore library files but not the gdextension file
 /bin/**
