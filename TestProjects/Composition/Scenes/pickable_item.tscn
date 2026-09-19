@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://4hym0jxnytcn"]
+
+[ext_resource type="PackedScene" uid="uid://cs8xf4vc03x6x" path="res://TestProjects/Composition/Components/pickable_component.tscn" id="1_cyvs1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pntbq"]
+size = Vector3(0.725, 0.05, 0.16)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dx4rx"]
+albedo_color = Color(1, 0.542901, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dx4rx"]
+size = Vector3(0.725, 0.05, 0.16)
+
+[node name="PickableItem" type="RigidBody3D" unique_id=1290967800]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1307466556]
+mesh = SubResource("BoxMesh_pntbq")
+surface_material_override/0 = SubResource("StandardMaterial3D_dx4rx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=929937267]
+shape = SubResource("BoxShape3D_dx4rx")
+
+[node name="PickableComponent" parent="." unique_id=75778833 instance=ExtResource("1_cyvs1")]

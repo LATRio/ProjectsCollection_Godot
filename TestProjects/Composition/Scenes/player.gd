@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var third_person_camera_component: ThirdPersonCameraComponent = $ThirdPersonCameraComponent
+@onready var interactor_component: InteractorComponent = $InteractorComponent
 
 
 func _ready() -> void:
@@ -30,6 +31,8 @@ func _physics_process(delta: float) -> void:
 		health_component.heal(5.0)
 	if input_component.hurt_pressed:
 		health_component.damage(10.0)
+	if input_component.interact_pressed:
+		try_to_interact()
 	if input_component.track_me_pressed:
 		var enemy := get_tree().get_first_node_in_group("Enemies") as Enemy
 		print("Telling enemy to move")
@@ -38,3 +41,8 @@ func _physics_process(delta: float) -> void:
 
 func _player_died() -> void:
 	get_tree().reload_current_scene()
+
+
+func try_to_interact() -> void:
+	var interactible := interactor_component.get_first_overlapping_interactible()
+	interactible.pickup()

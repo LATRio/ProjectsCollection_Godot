@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bobn4iq38d2wg" path="res://TestProjects/Composition/Components/third_person_camera_component.tscn" id="3_dbimi"]
 [ext_resource type="Script" uid="uid://qn6fhrwvh4v5" path="res://TestProjects/Composition/Components/movement_component.gd" id="4_2jssq"]
 [ext_resource type="Script" uid="uid://s2npqkkticrm" path="res://TestProjects/Composition/Components/health_component.gd" id="5_kvjfl"]
+[ext_resource type="PackedScene" uid="uid://bhbxypd7cm8s2" path="res://TestProjects/Composition/Components/interactor_component.tscn" id="6_dbimi"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_pntbq"]
 radius = 0.3
@@ -47,5 +48,7 @@ body = NodePath("..")
 [node name="HealthComponent" type="Node" parent="." unique_id=2085628982]
 unique_name_in_owner = true
 script = ExtResource("5_kvjfl")
+
+[node name="InteractorComponent" parent="." unique_id=1277199307 instance=ExtResource("6_dbimi")]
 
 [editable path="ThirdPersonCameraComponent"]

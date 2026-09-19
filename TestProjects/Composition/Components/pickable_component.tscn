@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cs8xf4vc03x6x"]
+
+[ext_resource type="Script" uid="uid://cplnnqviqel7g" path="res://TestProjects/Composition/Components/pickable_component.gd" id="1_ji7x3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pntbq"]
+
+[node name="Area3D" type="Area3D" unique_id=834646113]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_ji7x3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=904317355]
+unique_name_in_owner = true
+shape = SubResource("SphereShape3D_pntbq")

@@ -52,6 +52,6 @@ func move_towards_position(target_pos: Vector3) -> void:
 
 
 # Utility model function. Useful if model needs to lock onto something.
-func look_toward_position(target_pos: Vector3) -> void:
+func look_toward_position(_target_pos: Vector3) -> void:
 	# Placeholder. Maybe extract to the specialized component
 	pass
