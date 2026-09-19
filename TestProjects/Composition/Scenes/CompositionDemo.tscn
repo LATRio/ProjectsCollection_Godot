@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cd74sktarywx8" path="res://TestProjects/Composition/Scenes/player.tscn" id="1_1qkwt"]
 [ext_resource type="PackedScene" uid="uid://h1h5kooapabs" path="res://TestProjects/Composition/Scenes/enemy.tscn" id="2_vi70s"]
 [ext_resource type="PackedScene" uid="uid://4hym0jxnytcn" path="res://TestProjects/Composition/Scenes/pickable_item.tscn" id="3_gs4el"]
+[ext_resource type="PackedScene" uid="uid://bpk1ee4an05bl" path="res://TestProjects/Composition/Scenes/moving_platform.tscn" id="4_en34c"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1qkwt"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -65,6 +66,9 @@ mesh = SubResource("BoxMesh_pntbq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Level/MeshInstance3D2/StaticBody3D" unique_id=810654752]
 shape = SubResource("ConcavePolygonShape3D_1qkwt")
+
+[node name="MovingPlatform" parent="NavigationRegion3D" unique_id=479022431 instance=ExtResource("4_en34c")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.829864, 0, 7.2944183)
 
 [node name="PickableItem" parent="." unique_id=1290967800 instance=ExtResource("3_gs4el")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.519894, 0.025, -2.9507644)
