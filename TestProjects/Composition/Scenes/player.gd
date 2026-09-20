@@ -18,7 +18,7 @@ func _physics_process(delta: float) -> void:
 	
 	# PROCESS CAMERA INPUT
 	third_person_camera_component.tick(delta)
-		
+	
 	# PROCESS MOVEMENT
 	movement_component.move_dir = input_component.move_dir
 	movement_component.camera_forward = third_person_camera_component.camera_forward
@@ -37,8 +37,8 @@ func _physics_process(delta: float) -> void:
 		try_to_interact()
 	if input_component.track_me_pressed:
 		var enemy := get_tree().get_first_node_in_group("Enemies") as Enemy
-		print("Telling enemy to move")
-		enemy.navigation_agent_3d.target_position = global_position
+		if enemy:
+			enemy.navigation_agent_3d.target_position = global_position
 
 
 func _player_died() -> void:

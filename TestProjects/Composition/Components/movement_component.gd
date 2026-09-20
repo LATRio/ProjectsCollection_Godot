@@ -47,8 +47,9 @@ func tick(delta: float) -> void:
 
 # Utility movement function. Useful for cutscenes or NPCs
 func move_towards_position(target_pos: Vector3) -> void:
-	var target_dir := target_pos - body.global_position
-	move_dir = Vector2(target_dir.x, target_dir.z)
+	var target_pos2d := Vector2(target_pos.x, target_pos.z)
+	var global_pos2d := Vector2(body.global_position.x, body.global_position.z)
+	move_dir = (target_pos2d - global_pos2d).normalized()
 
 
 # Utility model function. Useful if model needs to lock onto something.
