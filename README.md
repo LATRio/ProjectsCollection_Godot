@@ -21,20 +21,26 @@ Features:
   - `Interactor` can detect and call `interact()` function of `Interactable` components.
 - Movement component.
   - Moves based on which direction it must move.
-  - Adjusts models direction (TODO: Switch to using animation tree)
+  - Adjusts model's direction (TODO: Switch to using animation tree)
   - Also supports setting a target position. Useful for NPC behaviors or scripted cutscenes.
 - Third person camera component.
   - Smooth camera movement
   - Adjusts camera height to focus on the character's face when zooms too close.
 - Moving platform.
   - Interactable scene. Moves when player interacts with it's "control panel". 
-  - Has it's own NavMesh and NPC can step onto it and ride it to the different floor.
+  - Has its own NavMesh and NPC can step onto it and ride it to the different floor.
 
 TODO list:
 - Combat related systems
 - NPC/Enemy behavior (probably will be powered by LimboAI behavior addon)
 - Inventory system
-- Separate Navigation Agent into it's own AI or NPC component.
+- Separate Navigation Agent into its own AI/NPC component.
+- More elegant way to connect moving platform's NavMesh to level's NavMesh. Maybe build invisible bridge for crossing over?
+
+### Quest System [WIP]
+Implementation of a flexible, extensible advanced quest system.
+
+See [QuestSystem](TestProjects/QuestSystem/README.md) (Too long to fit here, also might be a bit outdated)
 
 ---
 
