@@ -1,8 +1,21 @@
-`# Plan
-
 Entries exist to make things more readable and organized. But for now they're required.
 
 # Quest System
+
+---
+
+## Table of Contents
+- [JSON layouts](#quest-systems-json-layouts)
+- [Entries](#entries)
+  - [Questline](#questline)
+  - [Quest](#quest)
+  - [QuestStep](#queststep)
+- [Others](#other)
+  - [Actions](#actions)
+  - [Conditions](#conditions)
+
+---
+
 Implementation of feature-rich advanced quest system.
 
 Statuses (applies to every entry, except for singleton):
@@ -27,6 +40,7 @@ TODO:
 - Should I ensure that IDs of different types of entries don't collide either? Right now only Quests and Questlines are handled.
 - Implement integration with save/load system.
 
+---
 
 # Quest System's JSON layouts
 
@@ -43,6 +57,8 @@ Every Questline, Quest and QuestStep share following properties:
 - `on_active` - (Optional) list of actions to perform when entry becomes completable. Default: no actions.
 - `on_complete` - (Optional) list of actions to perform when entry get completed. Default: `UnlockNextQuestEntry_CommandAction`.
 - `on_fail` - (Optional) list of actions to perform when entry get failed. Default: `UnlockNextQuestEntry_CommandAction`.
+
+---
 
 ## Entries
 
@@ -70,9 +86,11 @@ Properties:
 Individual step of the Quest.
 - Only needs `completion_condition`. May or may not have a reward.
 
-### Other
+---
 
-**Actions**
+## Others
+
+### Actions
 
 TODO: Separate into its own system.
 
@@ -84,7 +102,7 @@ Types of actions:
   - Complete a Questline, Quest or QuestStep. Useful if there were many ways to complete quest or questline.
   - Lock a Questline, Quest or QuestStep. Useful if conflicting quest was completed/chosen.
 
-**Conditions**
+### Conditions
 
 TODO: Separate into its own system.
 
@@ -120,4 +138,4 @@ Types of conditions:
     - `ExternalQuestStep{Status}_Condition` - checks if specific external(other quest's) quest step is of status {Status}.
 
 - Other:
-  - Location condition - must arrive to the specific area or trigger Area3D with specific "name" or metadata. `
+  - Location condition - must arrive to the specific area or trigger Area3D with specific "name" or metadata.
