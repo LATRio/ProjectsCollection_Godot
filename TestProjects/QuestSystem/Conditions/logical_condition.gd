@@ -1,6 +1,8 @@
 class_name Logical_Condition
 extends Condition
 
+static var type := "logical"
+
 enum LogicalOp {
 	AND,
 	OR,
@@ -16,7 +18,7 @@ var inputs: Array[Condition]
 
 func evaluate() -> bool:
 	if inputs.is_empty():
-		printerr("'inputs' field of logical condition cannot be empty!")
+		push_error("[QuestSystem] 'inputs' field of logical condition cannot be empty!")
 		return false
 	
 	match logical_op:
@@ -72,3 +74,16 @@ func evaluate_XOR() -> bool:
 		if input.evaluate():
 			true_count += 1
 	return true_count % 2 == 1
+
+
+static func deserialize(json: Dictionary) -> Logical_Condition:
+	if not json.has("logical_op"):
+		push_error("Logical_Condition json entry doesn't have 'logical_op' key.")
+		return null
+	if not json.has("inputs"):
+		push_error("Logical_Condition json entry doesn't have 'inputs' key.")
+		return null
+	var logical := Logical_Condition.new()
+	logical.logical_op = json["logical_op"]
+	logical.inputs = json["inputs"]
+	return logical

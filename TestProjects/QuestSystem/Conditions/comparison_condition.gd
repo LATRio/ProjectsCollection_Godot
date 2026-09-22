@@ -1,6 +1,8 @@
 class_name Comparison_Condition
 extends Condition
 
+static var type := "comparison"
+
 enum CompareOp {
 	LESS,
 	GREATER,
@@ -44,3 +46,20 @@ func get_value_from_variant(value: Variant) -> Variant:
 		return float(value)
 	printerr("Value passed to lhs or rhs of comparison condition has invalid type!")
 	return 0
+
+
+static func deserialize(json: Dictionary) -> Comparison_Condition:
+	if not json.has("compare_op"):
+		push_error("Comparison_Condition json entry doesn't have 'compare_op' key.")
+		return null
+	if not json.has("lhs"):
+		push_error("Comparison_Condition json entry doesn't have 'lhs' key.")
+		return null
+	if not json.has("rhs"):
+		push_error("Comparison_Condition json entry doesn't have 'rhs' key.")
+		return null
+	var comparison := Comparison_Condition.new()
+	comparison.compare_op = json["compare_op"]
+	comparison.lhs = json["lhs"]
+	comparison.rhs = json["rhs"]
+	return comparison

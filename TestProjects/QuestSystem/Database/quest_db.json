@@ -1,0 +1,19 @@
+{
+	"questlines": [
+		{
+			"type": "questline",
+			"quests": []
+		}
+	],
+	"free_quests": [
+		{
+			"type": "quest",
+			"steps": [
+				{
+					"type": "queststep",
+					"objective": "TestObjective"
+				}
+			]
+		}
+	]
+}
