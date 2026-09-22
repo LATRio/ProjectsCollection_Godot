@@ -1,5 +1,3 @@
-Entries exist to make things more readable and organized. But for now they're required.
-
 # Quest System
 
 ---
@@ -10,7 +8,7 @@ Entries exist to make things more readable and organized. But for now they're re
   - [Questline](#questline)
   - [Quest](#quest)
   - [QuestStep](#queststep)
-- [Others](#other)
+- [Others](#others)
   - [Actions](#actions)
   - [Conditions](#conditions)
 
@@ -27,17 +25,24 @@ Statuses (applies to every entry, except for singleton):
 - `FAILED` (Failure condition was met)
 - `LOCKED` (Locked out due to some reason)
 - `SKIPPED` (Parent entry was closed early without reaching this entry)
+- `ERROR` (Used to handle erroneous behaviors)
 
 Notes:
 - `UNKNOWN` is default status.  
 - Can only be set to `CANCELLED` status from outside?
 - When entry gets `COMPLETED`, `CANCELLED`, `FAILED` or `LOCKED` for some reason, all the remaining nested entries are recursively marked as `SKIPPED`. Maybe add a way to revive some of them later on?
 - In order to avoid entry getting marked `SKIPPED`, they must be separated into another questline or become a free quest entry
+- Entries exist to make things more readable and organized. But for now they're required.
 
 TODO:
+- Switch to using Godot's Resources instead of JSON.
+    - This allows for easier editing of database using custom editor's plugin.
+    - Resource database can be compiled into more compact raw data (the one used right now) for performance and memory efficiency.
+    - Should compilation happen on project export or when game launches?
+      - Making it compile during runtime makes modding support easier. And make runtime(in-game) creation/modification of quests possible?
+      - Compiling on export more suited if database isn't meant to be tampered with.
 - How to handle repeatable quests? Some condition on when it becomes available again?
 - Do I even need to mark them `SKIPPED`? Currently, this doesn't have any uses. Maybe in the future.
-- Should I ensure that IDs of different types of entries don't collide either? Right now only Quests and Questlines are handled.
 - Implement integration with save/load system.
 
 ---
@@ -61,8 +66,11 @@ Every Questline, Quest and QuestStep share following properties:
 ---
 
 ## Entries
+[Entries folder](./Entries)
 
 ### Questline
+[questline_entry.gd](./Entries/questline_entry.gd)
+
 List of Quests.
 - Organizes quests into both linear and non-linear progression line(s).
 - Contains Dependency(Relationship) conditions for its quests: decides which route to take based on configurable conditions.
@@ -74,6 +82,8 @@ Properties:
 TODO?: Separate questline(or sub questlines) into their own JSON file and only parse them if conditions are met.
 
 ### Quest
+[quest_entry.gd](./Entries/quest_entry.gd)
+
 List of QuestSteps.
 - Manages when which QuestStep should be made available to the player. 
 - May be part of a questline or a free quest. Free quests are available globally and must have a prerequisite condition unless they're always available.
@@ -83,6 +93,8 @@ Properties:
 - `steps` - list of QuestStep entries.
 
 ### QuestStep
+[queststep_entry.gd](./Entries/queststep_entry.gd)
+
 Individual step of the Quest.
 - Only needs `completion_condition`. May or may not have a reward.
 
@@ -90,7 +102,10 @@ Individual step of the Quest.
 
 ## Others
 
+ObjectSerializationRegistry was created to assist with deserialization of Actions', Conditions' and Entries' JSON data.
+
 ### Actions
+[Actions folder](./Actions)
 
 TODO: Separate into its own system.
 
@@ -103,6 +118,7 @@ Types of actions:
   - Lock a Questline, Quest or QuestStep. Useful if conflicting quest was completed/chosen.
 
 ### Conditions
+[Conditions folder](./Conditions)
 
 TODO: Separate into its own system.
 
