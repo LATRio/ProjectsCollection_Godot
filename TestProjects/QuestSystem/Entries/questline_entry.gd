@@ -18,13 +18,16 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 
 
 static func deserialize(json: Dictionary) -> QuestlineEntry:
-	if not json.has("steps"):
-		push_error("QuestStep json entry doesn't have 'objective' key.")
+	if not json.has("quests"):
+		push_error("[JSONDeserializer] QuestStep json entry doesn't have 'quests' key.")
 		return null
 	var questline := QuestlineEntry.new()
 	super.deserialize_json(questline, json)
-	for quest in json["quests"]:
-		var quest_obj: QuestEntry = ObjectSerializationRegistry.deserialize_json(quest)
+	for quest_json in json["quests"]:
+		var quest_obj: QuestEntry = ObjectSerializationRegistry.deserialize_json(quest_json)
+		if not quest_obj:
+			push_error("[JSONDeserializer] Failed to parse a quest of the questline ID {0}! JSON: {1}".format([questline.id, quest_json]))
+			return null
 		quest_obj.parent_id = questline.id
 		questline.quests.push_back(quest_obj.id)
 		QuestSystem.add_quest(quest_obj)

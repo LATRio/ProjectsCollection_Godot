@@ -50,13 +50,13 @@ func get_value_from_variant(value: Variant) -> Variant:
 
 static func deserialize(json: Dictionary) -> Comparison_Condition:
 	if not json.has("compare_op"):
-		push_error("Comparison_Condition json entry doesn't have 'compare_op' key.")
+		push_error("[JSONDeserializer] Comparison_Condition json entry doesn't have 'compare_op' key.")
 		return null
 	if not json.has("lhs"):
-		push_error("Comparison_Condition json entry doesn't have 'lhs' key.")
+		push_error("[JSONDeserializer] Comparison_Condition json entry doesn't have 'lhs' key.")
 		return null
 	if not json.has("rhs"):
-		push_error("Comparison_Condition json entry doesn't have 'rhs' key.")
+		push_error("[JSONDeserializer] Comparison_Condition json entry doesn't have 'rhs' key.")
 		return null
 	var comparison := Comparison_Condition.new()
 	comparison.compare_op = json["compare_op"]

@@ -54,7 +54,7 @@ func evaluate_OR() -> bool:
 
 func evaluate_NOT() -> bool:
 	if inputs.size() > 1:
-		printerr("NOT logical operation only accepts 1 input!")
+		printerr("[QuestSystem] NOT logical operation only accepts 1 input!")
 		return false
 	
 	return not inputs.front().evaluate()
@@ -78,10 +78,10 @@ func evaluate_XOR() -> bool:
 
 static func deserialize(json: Dictionary) -> Logical_Condition:
 	if not json.has("logical_op"):
-		push_error("Logical_Condition json entry doesn't have 'logical_op' key.")
+		push_error("[JSONDeserializer] Logical_Condition json entry doesn't have 'logical_op' key.")
 		return null
 	if not json.has("inputs"):
-		push_error("Logical_Condition json entry doesn't have 'inputs' key.")
+		push_error("[JSONDeserializer] Logical_Condition json entry doesn't have 'inputs' key.")
 		return null
 	var logical := Logical_Condition.new()
 	logical.logical_op = json["logical_op"]

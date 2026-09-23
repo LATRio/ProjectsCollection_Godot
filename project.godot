@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-QuestSystem="*uid://3srrcho41v6r"
 ObjectSerializationRegistry="*uid://dvxx0ifhho784"
+QuestSystem="*uid://3srrcho41v6r"
 
 [display]
 

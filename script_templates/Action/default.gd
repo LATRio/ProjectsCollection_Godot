@@ -1,4 +1,4 @@
-# meta-description: Default template
+# meta-description: Action derived template
 class_name _CLASS_
 extends _BASE_
 

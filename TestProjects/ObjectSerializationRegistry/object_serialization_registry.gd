@@ -35,7 +35,7 @@ func register_class(script: Script) -> void:
 			found_type_prop_in_script = true
 			break
 	if not found_type_prop_in_script:
-		push_error("Cannot register a class without 'type' property! Class: {0}", script.get_global_name())
+		push_error("Cannot register a class without 'type' property! Class: {0}".format([script.get_global_name()]))
 		return
 	
 	var found_deserialize_method := false
@@ -47,7 +47,7 @@ func register_class(script: Script) -> void:
 					break
 	
 	if not found_deserialize_method:
-		push_error("Cannot register class that doesn't have a function 'deserialize' function! Class: {0}", script.get_global_name())
+		push_error("Cannot register class that doesn't have a function 'deserialize' function! Class: {0}".format([script.get_global_name()]))
 		return
 	
 	# All requirements are met. Proceed.
@@ -56,10 +56,10 @@ func register_class(script: Script) -> void:
 
 func deserialize_json(dict_json: Dictionary) -> RefCounted:
 	if not dict_json.has("type"):
-		push_error("JSON Dictionary doesn't contain 'type' key. JSON: {0}", dict_json)
+		push_error("JSON Dictionary doesn't contain 'type' key. JSON: ", dict_json)
 		return null
 	if not _registry.has(dict_json["type"]):
-		push_error("Class with 'type' {0} isn't registered!", dict_json["type"])
+		push_error("Class with 'type' {0} isn't registered!".format([dict_json["type"]]))
 		return null
 	return _registry[dict_json["type"]].deserialize(dict_json)
 	

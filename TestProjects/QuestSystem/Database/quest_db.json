@@ -1,15 +1,41 @@
 {
 	"questlines": [
 		{
+			"id": 10000,
 			"type": "questline",
-			"quests": []
+			"quests": [
+				{
+					"id": 10100,
+					"type": "quest",
+					"steps": [
+						{
+							"id": 10101,
+							"type": "queststep",
+							"objective": "SomeObjective"
+						}
+					]
+				},
+				{
+					"id": 10200,
+					"type": "quest",
+					"steps": [
+						{
+							"id": 10201,
+							"type": "queststep",
+							"objective": "TestObjective"
+						}
+					]
+				}
+			]
 		}
 	],
 	"free_quests": [
 		{
+			"id": 100,
 			"type": "quest",
 			"steps": [
 				{
+					"id": 101,
 					"type": "queststep",
 					"objective": "TestObjective"
 				}

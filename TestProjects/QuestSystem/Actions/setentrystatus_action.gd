@@ -13,10 +13,10 @@ func execute(_caller_id: int) -> void:
 
 static func deserialize(json: Dictionary) -> SetEntryStatus_Action:
 	if not json.has("entry_id"):
-		push_error("SetEntryStatus_Action JSON entry doesn't have 'entry_id' key. JSON: ", json)
+		push_error("[JSONDeserializer] SetEntryStatus_Action JSON entry doesn't have 'entry_id' key. JSON: ", json)
 		return null
 	if not json.has("new_status"):
-		push_error("SetEntryStatus_Action JSON entry doesn't have 'new_status' key. JSON: ", json)
+		push_error("[JSONDeserializer] SetEntryStatus_Action JSON entry doesn't have 'new_status' key. JSON: ", json)
 		return null
 	var set_questline_status := SetEntryStatus_Action.new()
 	set_questline_status.entry_id = json["entry_id"]

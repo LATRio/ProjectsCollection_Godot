@@ -75,7 +75,7 @@ func test_for_failure() -> void:
 
 static func deserialize_json(entry: Entry, json: Dictionary) -> void:
 	if not json.has("id"):
-		push_error("Couldn't find key 'id' in entry json: {0}", json)
+		push_error("[JSONDeserializer] Couldn't find key 'id' in entry JSON: ", json)
 		return
 	entry.id = json["id"]
 	if json.has("availability_condition"):
