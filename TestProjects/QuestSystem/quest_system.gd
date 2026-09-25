@@ -17,9 +17,9 @@ enum EntryStatus {
 var entries: Dictionary[int, Entry]
 
 # These store actual quest entry objects
-var questlines: Array[int]
-var quests: Array[int]
-var queststeps: Array[int]
+var questlines: PackedInt32Array
+var quests: PackedInt32Array
+var queststeps: PackedInt32Array
 # This stores IDs of entries sorted by their status
 # Prevents going through completed or failed entries and checking their conditions
 # Used for polling conditions of all entries at once
@@ -36,7 +36,7 @@ var all_entries_by_status: Dictionary[QuestSystem.EntryStatus, PackedInt32Array]
 }
 
 # Store independent quests that don't belong in any questline
-var free_quests: Array[int]
+var free_quests: PackedInt32Array
 
 var _active := false
 
@@ -54,14 +54,17 @@ func _ready() -> void:
 		if json.data.has("questlines"):
 			for questline_json in json.data["questlines"]:
 				var questline := ObjectSerializationRegistry.deserialize_json(questline_json)
-				all_entries_by_status[questline.get_status()].push_back(questline.id)
 				add_questline(questline)
 		if json.data.has("free_quests"):
 			for quest_json in json.data["free_quests"]:
 				var quest := ObjectSerializationRegistry.deserialize_json(quest_json)
-				all_entries_by_status[quest.get_status()].push_back(quest.id)
 				add_quest(quest)
 	print("Finished parsing quest database.")
+	
+	# TODO: Feels like this will benefit a lot from ECS approach...
+	for entry_id in QuestSystem.questlines:
+		var questline := QuestSystem.get_questline(entry_id)
+		questline.evaluate_availability()
 
 
 func entry_exists(entry_id: int) -> bool:
@@ -90,16 +93,21 @@ func is_queststep_id(entry_id: int) -> bool:
 
 
 func add_questline(questline: QuestlineEntry) -> void:
-	add_entry(questline)
+	if add_entry(questline):
+		questlines.push_back(questline.id)
 
 
 func add_quest(quest: QuestEntry, is_free: bool = false) -> void:
-	if add_entry(quest) and is_free:
-		free_quests.push_back(quest.id)
+	if add_entry(quest):
+		if is_free:
+			free_quests.push_back(quest.id)
+		else:
+			quests.push_back(quest.id)
 
 
 func add_queststep(queststep: QuestStepEntry) -> void:
-	add_entry(queststep)
+	if add_entry(queststep):
+		queststeps.push_back(queststep.id)
 
 
 func add_entry(entry: Entry) -> bool:
@@ -116,6 +124,29 @@ func get_entry(entry_id: int) -> Entry:
 	if entry_exists(entry_id):
 		return entries[entry_id]
 	return null
+
+
+func get_entry_ids_by_status(status: QuestSystem.EntryStatus) -> PackedInt32Array:
+	return all_entries_by_status[status]
+
+
+func get_array_of_entry_ids_sorted_by_status() -> Array[PackedInt32Array]:
+	var merged_arr: PackedInt32Array = []
+	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.UNKNOWN])
+	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.AVAILABLE])
+	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.INPROGRESS])
+	return merged_arr
+
+
+func get_nontrackable_entry_ids() -> PackedInt32Array:
+	var merged_arr: PackedInt32Array = []
+	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.COMPLETED])
+	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.CANCELLED])
+	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.FAILED])
+	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.LOCKED])
+	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.SKIPPED])
+	# skip erroneous entries?
+	return merged_arr
 
 
 func get_questline(entry_id: int) -> QuestlineEntry:
@@ -150,7 +181,7 @@ func get_entry_status(entry_id: int) -> QuestSystem.EntryStatus:
 
 
 func sort_entry_by_status(entry_id: int, old_status: QuestSystem.EntryStatus, new_status: QuestSystem.EntryStatus) -> void:
-	if all_entries_by_status[old_status].has(entry_id):
-		all_entries_by_status[old_status].erase(entry_id)
-		all_entries_by_status[new_status].push_back(entry_id)
-	push_error("[QuestSystem] Entry ID [{0}] wasn't added into a list sorted by status!".format([entry_id]))
+	if not all_entries_by_status[old_status].has(entry_id):
+		push_error("[QuestSystem] Entry ID [{0}] wasn't added into a list sorted by status!".format([entry_id]))
+	all_entries_by_status[old_status].erase(entry_id)
+	all_entries_by_status[new_status].push_back(entry_id)

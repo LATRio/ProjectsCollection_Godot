@@ -1,12 +1,12 @@
-# meta-description: Action derived template
+# meta-description: Condition derived template
 class_name _CLASS_
 extends _BASE_
 
 static var type := "_CLASS_"
 
 
-func execute() -> void:
-	pass
+func evaluate() -> bool:
+	return false
 
 
 static func deserialize(json: Dictionary) -> _CLASS_:

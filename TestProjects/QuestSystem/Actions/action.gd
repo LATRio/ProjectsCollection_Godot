@@ -1,6 +1,8 @@
 class_name Action
 extends RefCounted
 
+var caller_id: int
 
-func execute(_caller_id: int) -> void:
+
+func execute() -> void:
 	pass

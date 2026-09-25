@@ -3,7 +3,7 @@ extends Entry
 
 static var type := "quest"
 
-var steps: Array[int] # Stores steps in order they're defined in JSON file
+var steps: PackedInt32Array # Stores steps in order they're defined in JSON file
 
 
 func add_step(step: QuestStepEntry) -> void:
@@ -31,6 +31,10 @@ func get_next_sibling_entry() -> int:
 			return questline.quests[idx + 1]
 	push_error("[QuestSystem] QuestStep[{0}] of Quest[{1}] doesn't have a next sibling!".format([id, parent_id]))
 	return -1
+
+
+func get_child_entry_ids() -> PackedInt32Array:
+	return steps
 
 
 static func deserialize(json: Dictionary) -> QuestEntry:

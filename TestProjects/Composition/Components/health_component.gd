@@ -2,7 +2,7 @@ class_name HealthComponent
 extends Node
 
 signal health_changed(current: float, max: float)
-signal died
+signal died # Use EventBus instead?
 
 @export var max_health := 100.0
 var current_health := max_health
@@ -13,14 +13,16 @@ func _ready() -> void:
 
 
 func damage(amount: float) -> void:
-	assert(amount >= 0.0)
+	if amount < 0.0:
+		push_error("[HealthComponent] Damage value cannot be negative! Amount: ", amount)
+		return
 	current_health -= amount
 	if current_health <= 0.0:
 		current_health = 0.0
 		died.emit()
-	elif current_health > max_health:
-		current_health = max_health
+		EventBus.player_died.emit()
 	_emit()
+	EventBus.player_received_damage.emit(amount)
 
 
 func heal(amount: float) -> void:

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d4ia3t5013fpr"]
 
 [ext_resource type="PackedScene" uid="uid://cd74sktarywx8" path="res://TestProjects/Composition/Scenes/player.tscn" id="1_1qkwt"]
+[ext_resource type="Script" uid="uid://dn0y10761m6my" path="res://TestProjects/Composition/Scenes/composition_demo.gd" id="1_txxhk"]
 [ext_resource type="PackedScene" uid="uid://h1h5kooapabs" path="res://TestProjects/Composition/Scenes/enemy.tscn" id="2_vi70s"]
 [ext_resource type="PackedScene" uid="uid://4hym0jxnytcn" path="res://TestProjects/Composition/Scenes/pickable_item.tscn" id="3_gs4el"]
 [ext_resource type="PackedScene" uid="uid://bpk1ee4an05bl" path="res://TestProjects/Composition/Scenes/moving_platform.tscn" id="4_en34c"]
@@ -51,6 +52,7 @@ data = PackedVector3Array(-3.5663998, 0.21409999, 4.0401, 3.5663998, 0.21409999,
 data = PackedVector3Array(-3.5663998, 0.21409999, 4.0401, 3.5663998, 0.21409999, 4.0401, -3.5663998, -0.21409999, 4.0401, 3.5663998, 0.21409999, 4.0401, 3.5663998, -0.21409999, 4.0401, -3.5663998, -0.21409999, 4.0401, 3.5663998, 0.21409999, -4.0401, -3.5663998, 0.21409999, -4.0401, 3.5663998, -0.21409999, -4.0401, -3.5663998, 0.21409999, -4.0401, -3.5663998, -0.21409999, -4.0401, 3.5663998, -0.21409999, -4.0401, 3.5663998, 0.21409999, 4.0401, 3.5663998, 0.21409999, -4.0401, 3.5663998, -0.21409999, 4.0401, 3.5663998, 0.21409999, -4.0401, 3.5663998, -0.21409999, -4.0401, 3.5663998, -0.21409999, 4.0401, -3.5663998, 0.21409999, -4.0401, -3.5663998, 0.21409999, 4.0401, -3.5663998, -0.21409999, -4.0401, -3.5663998, 0.21409999, 4.0401, -3.5663998, -0.21409999, 4.0401, -3.5663998, -0.21409999, -4.0401, 3.5663998, 0.21409999, 4.0401, -3.5663998, 0.21409999, 4.0401, 3.5663998, 0.21409999, -4.0401, -3.5663998, 0.21409999, 4.0401, -3.5663998, 0.21409999, -4.0401, 3.5663998, 0.21409999, -4.0401, -3.5663998, -0.21409999, 4.0401, 3.5663998, -0.21409999, 4.0401, -3.5663998, -0.21409999, -4.0401, 3.5663998, -0.21409999, 4.0401, 3.5663998, -0.21409999, -4.0401, -3.5663998, -0.21409999, -4.0401)
 
 [node name="CompositionDemo" type="Node3D" unique_id=775183708]
+script = ExtResource("1_txxhk")
 
 [node name="Environment" type="Node" parent="." unique_id=1601196446]
 

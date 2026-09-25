@@ -48,6 +48,14 @@ func get_value_from_variant(value: Variant) -> Variant:
 	return 0
 
 
+func activate_tracking() -> void:
+	pass
+
+
+func deactivate_tracking() -> void:
+	pass
+
+
 static func deserialize(json: Dictionary) -> Comparison_Condition:
 	if not json.has("compare_op"):
 		push_error("[JSONDeserializer] Comparison_Condition json entry doesn't have 'compare_op' key.")
@@ -62,4 +70,8 @@ static func deserialize(json: Dictionary) -> Comparison_Condition:
 	comparison.compare_op = json["compare_op"]
 	comparison.lhs = json["lhs"]
 	comparison.rhs = json["rhs"]
+	
+	#comparison.is_tracking = true
+	#comparison.activate_tracking()
+	
 	return comparison

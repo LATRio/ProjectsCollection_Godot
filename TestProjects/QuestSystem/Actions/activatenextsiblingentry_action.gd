@@ -4,7 +4,7 @@ extends Action
 static var type := "ActivateNextSiblingEntry"
 
 
-func execute(caller_id: int) -> void:
+func execute() -> void:
 	var entry := QuestSystem.get_entry(caller_id)
 	if entry:
 		var sibling_id := entry.get_next_sibling_entry()

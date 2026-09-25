@@ -7,7 +7,7 @@ var entry_id: int
 var new_status: QuestSystem.EntryStatus
 
 
-func execute(_caller_id: int) -> void:
+func execute() -> void:
 	QuestSystem.set_entry_status(entry_id, new_status)
 
 

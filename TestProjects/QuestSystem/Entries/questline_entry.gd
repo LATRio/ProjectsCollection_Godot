@@ -3,7 +3,7 @@ extends Entry
 
 static var type := "questline"
 
-var quests: Array[int]
+var quests: PackedInt32Array
 
 
 func set_status(new_status: QuestSystem.EntryStatus) -> bool:
@@ -15,6 +15,10 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 					QuestSystem.set_entry_status(quest_id, QuestSystem.EntryStatus.SKIPPED)
 		return true
 	return false
+
+
+func get_child_entry_ids() -> PackedInt32Array:
+	return quests
 
 
 static func deserialize(json: Dictionary) -> QuestlineEntry:

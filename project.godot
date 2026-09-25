@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+EventBus="*uid://bc6ryjbfk5efg"
 ObjectSerializationRegistry="*uid://dvxx0ifhho784"
 QuestSystem="*uid://3srrcho41v6r"
 
