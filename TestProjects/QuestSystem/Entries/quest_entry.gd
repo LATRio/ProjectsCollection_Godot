@@ -22,14 +22,31 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 	return false
 
 
-func get_next_sibling_entry() -> int:
+func get_previous_sibling_entry() -> int:
+	if parent_id == -1:
+		return -1
 	var questline := QuestSystem.get_questline(parent_id)
 	if not questline:
 		push_error("[QuestSystem] Failed to retrieve a parent Quest[{0}] of QuestStep[{1}]!".format([parent_id, id]))
-	for idx in [0, questline.quests.size() - 1]: # if this step is last, return null
+	if questline.quests.size() < 2:
+		return -1
+	for idx in range(1, questline.quests.size()):
+		if questline.quests[idx] == id:
+			return questline.quests[idx - 1]
+	return -1
+
+
+func get_next_sibling_entry() -> int:
+	if parent_id == -1:
+		return -1
+	var questline := QuestSystem.get_questline(parent_id)
+	if not questline:
+		push_error("[QuestSystem] Failed to retrieve a parent Quest[{0}] of QuestStep[{1}]!".format([parent_id, id]))
+	if questline.quests.size() < 2:
+		return -1
+	for idx in range(0, questline.quests.size() - 1):
 		if questline.quests[idx] == id:
 			return questline.quests[idx + 1]
-	push_error("[QuestSystem] QuestStep[{0}] of Quest[{1}] doesn't have a next sibling!".format([id, parent_id]))
 	return -1
 
 
@@ -43,8 +60,6 @@ static func deserialize(json: Dictionary) -> QuestEntry:
 		return null
 	var quest := QuestEntry.new()
 	super.deserialize_json(quest, json)
-	if quest.on_complete.is_empty():
-		quest.on_complete.push_back(ActivateNextSiblingEntry_Action.new())
 	for step_json in json["steps"]:
 		var step_obj: QuestStepEntry = ObjectSerializationRegistry.deserialize_json(step_json)
 		if not step_obj:

@@ -1,7 +1,7 @@
 class_name True_Condition
 extends Condition
 
-static var type := "true"
+static var type := "True"
 
 
 func evaluate() -> bool:

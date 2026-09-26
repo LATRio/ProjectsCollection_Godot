@@ -58,13 +58,16 @@ func _ready() -> void:
 		if json.data.has("free_quests"):
 			for quest_json in json.data["free_quests"]:
 				var quest := ObjectSerializationRegistry.deserialize_json(quest_json)
-				add_quest(quest)
+				add_quest(quest, true)
 	print("Finished parsing quest database.")
 	
 	# TODO: Feels like this will benefit a lot from ECS approach...
-	for entry_id in QuestSystem.questlines:
-		var questline := QuestSystem.get_questline(entry_id)
+	for entry_id in questlines:
+		var questline := get_questline(entry_id)
 		questline.evaluate_availability()
+	for entry_id in free_quests:
+		var quest := get_quest(entry_id)
+		quest.evaluate_availability()
 
 
 func entry_exists(entry_id: int) -> bool:
@@ -79,10 +82,10 @@ func is_questline_id(entry_id: int) -> bool:
 
 
 func is_quest_id(entry_id: int) -> bool:
-	if not quests.has(entry_id):
-		push_error("[QuestSystem] Entry ID [{0}] isn't a quest!".format([entry_id]))
-		return false
-	return true
+	if quests.has(entry_id) or free_quests.has(entry_id):
+		return true
+	push_error("[QuestSystem] Entry ID [{0}] isn't a quest!".format([entry_id]))
+	return false
 
 
 func is_queststep_id(entry_id: int) -> bool:
@@ -156,8 +159,9 @@ func get_questline(entry_id: int) -> QuestlineEntry:
 
 
 func get_quest(entry_id: int) -> QuestEntry:
-	if entry_exists(entry_id) and is_quest_id(entry_id):
-		return entries[entry_id]
+	if entry_exists(entry_id):
+		if is_quest_id(entry_id):
+			return entries[entry_id]
 	return null
 
 
@@ -168,9 +172,9 @@ func get_queststep(entry_id: int) -> QuestStepEntry:
 
 
 func set_entry_status(entry_id: int, status: QuestSystem.EntryStatus) -> void:
-	if entry_exists(entry_id):
-		entries[entry_id].set_status(status)
-	push_error("[QuestSystem] Cannot set a status of a non existent Entry ID {0}!".format([entry_id]))
+	if not entry_exists(entry_id):
+		push_error("[QuestSystem] Cannot set a status of a non existent Entry ID {0}!".format([entry_id]))
+	entries[entry_id].set_status(status)
 
 
 func get_entry_status(entry_id: int) -> QuestSystem.EntryStatus:
@@ -185,3 +189,27 @@ func sort_entry_by_status(entry_id: int, old_status: QuestSystem.EntryStatus, ne
 		push_error("[QuestSystem] Entry ID [{0}] wasn't added into a list sorted by status!".format([entry_id]))
 	all_entries_by_status[old_status].erase(entry_id)
 	all_entries_by_status[new_status].push_back(entry_id)
+
+
+func status_to_string(status: QuestSystem.EntryStatus) -> String:
+	match status:
+		QuestSystem.EntryStatus.UNKNOWN:
+			return "UNKNOWN"
+		QuestSystem.EntryStatus.AVAILABLE:
+			return "AVAILABLE"
+		QuestSystem.EntryStatus.INPROGRESS:
+			return "INPROGRESS"
+		QuestSystem.EntryStatus.COMPLETED:
+			return "COMPLETED"
+		QuestSystem.EntryStatus.CANCELLED:
+			return "CANCELLED"
+		QuestSystem.EntryStatus.FAILED:
+			return "FAILED"
+		QuestSystem.EntryStatus.LOCKED:
+			return "LOCKED"
+		QuestSystem.EntryStatus.SKIPPED:
+			return "SKIPPED"
+		QuestSystem.EntryStatus.ERROR:
+			return "ERROR"
+		_:
+			return "-1"

@@ -9,7 +9,6 @@ func execute() -> void:
 	if entry:
 		var sibling_id := entry.get_next_sibling_entry()
 		if sibling_id == -1:
-			push_error("[QuestSystem] Caller Entry ID [{0}] doesn't have any siblings!".format([caller_id]))
 			return
 		QuestSystem.set_entry_status(sibling_id, QuestSystem.EntryStatus.INPROGRESS)
 	else:

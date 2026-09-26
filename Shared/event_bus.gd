@@ -6,6 +6,8 @@ extends Node
 @warning_ignore("unused_signal")
 signal player_received_damage(amount: float)
 @warning_ignore("unused_signal")
+signal player_received_healing(amount: float)
+@warning_ignore("unused_signal")
 signal player_died
 
 # Inventory events

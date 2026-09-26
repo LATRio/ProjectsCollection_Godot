@@ -29,6 +29,8 @@ func heal(amount: float) -> void:
 	assert(amount >= 0.0)
 	current_health = clamp(current_health + amount, 0.0, max_health)
 	_emit()
+	# Maybe clamp healing amount and report actual effective healing only?
+	EventBus.player_received_healing.emit(amount)
 
 
 func _emit() -> void:

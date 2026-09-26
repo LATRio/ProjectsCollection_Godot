@@ -24,8 +24,11 @@ func _ready() -> void:
 	register_class(Logical_Condition)
 	register_class(True_Condition)
 	register_class(False_Condition)
+	register_class(PreviousSiblingEntryIsCompleted_Condition)
 	
 	# Objectives
+	register_class(DamagePlayer_Objective)
+	register_class(HealPlayer_Objective)
 
 
 func register_class(script: Script) -> void:

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://h1h5kooapabs" path="res://TestProjects/Composition/Scenes/enemy.tscn" id="2_vi70s"]
 [ext_resource type="PackedScene" uid="uid://4hym0jxnytcn" path="res://TestProjects/Composition/Scenes/pickable_item.tscn" id="3_gs4el"]
 [ext_resource type="PackedScene" uid="uid://bpk1ee4an05bl" path="res://TestProjects/Composition/Scenes/moving_platform.tscn" id="4_en34c"]
+[ext_resource type="PackedScene" uid="uid://cb6b2hoys7jus" path="res://TestProjects/Composition/Scenes/gui.tscn" id="6_ls3tt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1qkwt"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -126,5 +127,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0561101)
 
 [node name="MovingPlatform" parent="." unique_id=479022431 instance=ExtResource("4_en34c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9193635, 1.4224856, -10.503006)
+
+[node name="GUI" parent="." unique_id=1802863940 instance=ExtResource("6_ls3tt")]
 
 [editable path="MovingPlatform"]

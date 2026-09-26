@@ -11,18 +11,26 @@
 						{
 							"id": 10101,
 							"type": "queststep",
-							"objective": "SomeObjective"
+							"objective": {
+								"type": "DamagePlayer"
+							}
 						}
 					]
 				},
 				{
 					"id": 10200,
 					"type": "quest",
+					"availability_condition": {
+						"type": "PreviousSiblingEntryIsCompleted",
+						"comment": "Made available by previous quest on completion. TODO: automate if empty"
+					},
 					"steps": [
 						{
 							"id": 10201,
 							"type": "queststep",
-							"objective": "TestObjective"
+							"objective": {
+								"type": "HealPlayer"
+							}
 						}
 					]
 				}
@@ -37,7 +45,9 @@
 				{
 					"id": 101,
 					"type": "queststep",
-					"objective": "TestObjective"
+					"objective": {
+						"type": "DamagePlayer"
+					}
 				}
 			]
 		}

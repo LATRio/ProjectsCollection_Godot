@@ -1,6 +1,8 @@
 class_name Entry
 extends RefCounted
 
+signal entry_updated
+
 var id: int
 var status := QuestSystem.EntryStatus.UNKNOWN
 var availability_condition: Condition
@@ -14,14 +16,13 @@ var on_fail: Array[Action]
 
 var parent_id: int = -1
 
+
 func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 	if status == new_status:
 		return false
 	QuestSystem.sort_entry_by_status(id, status, new_status)
 	status = new_status
 	match status:
-		# TODO: Maybe notify parent on becoming AVAILABLE or INPROGRESS so that
-		# GUI can be updated with exclamation mark?
 		QuestSystem.EntryStatus.AVAILABLE:
 			if not on_available.is_empty():
 				for action in on_available:
@@ -30,6 +31,10 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 			if not on_active.is_empty():
 				for action in on_active:
 					action.execute()
+			if parent_id != -1:
+				QuestSystem.get_entry(parent_id).refresh_entry()
+			else:
+				refresh_entry()
 		QuestSystem.EntryStatus.COMPLETED:
 			if not on_complete.is_empty():
 				for action in on_complete:
@@ -44,6 +49,8 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 				QuestSystem.get_entry(parent_id).refresh_entry()
 		_:
 			pass
+	
+	entry_updated.emit()
 	return true
 
 
@@ -53,6 +60,10 @@ func get_status() -> QuestSystem.EntryStatus:
 
 func get_parent_id() -> int:
 	return parent_id
+
+
+func get_previous_sibling_entry() -> int:
+	return -1
 
 
 func get_next_sibling_entry() -> int:
@@ -66,6 +77,7 @@ func get_child_entry_ids() -> PackedInt32Array:
 func evaluate_availability() -> bool:
 	if not availability_condition or availability_condition.evaluate():
 		set_status(QuestSystem.EntryStatus.AVAILABLE)
+		evaluate_activation()
 		return true
 	return false
 
@@ -73,6 +85,7 @@ func evaluate_availability() -> bool:
 func evaluate_activation() -> bool:
 	if not activation_condition or activation_condition.evaluate():
 		set_status(QuestSystem.EntryStatus.INPROGRESS)
+		evaluate_completion() # If required item is already collected, for example.
 		return true
 	return false
 
@@ -98,10 +111,17 @@ func refresh_entry() -> void:
 		QuestSystem.EntryStatus.AVAILABLE:
 			evaluate_activation()
 		QuestSystem.EntryStatus.INPROGRESS:
+			refresh_child_entries()
 			if not evaluate_completion():
 				evaluate_failure()
 		_:
 			pass
+
+
+func refresh_child_entries() -> void:
+	for child_id in get_child_entry_ids():
+		var child := QuestSystem.get_entry(child_id)
+		child.refresh_entry()
 
 
 static func deserialize_json(entry: Entry, json: Dictionary) -> void:
@@ -123,13 +143,19 @@ static func deserialize_json(entry: Entry, json: Dictionary) -> void:
 	if json.has("completion_condition"):
 		entry.completion_condition = ObjectSerializationRegistry.deserialize_json(json["completion_condition"])
 	else:
-		entry.completion_condition = AllChildEntriesComplete_Condition.new()
+		if json["type"] == "queststep":
+			entry.completion_condition = ObjectiveCompleted_Condition.new()
+		else:
+			entry.completion_condition = AllChildEntriesComplete_Condition.new()
 	entry.completion_condition.caller_id = entry.id
 	
 	if json.has("failure_condition"):
 		entry.failure_condition = ObjectSerializationRegistry.deserialize_json(json["failure_condition"])
 	else:
-		entry.failure_condition = AnyChildEntryFailed_Condition.new()
+		if json["type"] == "queststep":
+			entry.failure_condition = ObjectiveFailed_Condition.new()
+		else:
+			entry.failure_condition = AnyChildEntryFailed_Condition.new()
 	entry.failure_condition.caller_id = entry.id
 	
 	if json.has("on_available"):
