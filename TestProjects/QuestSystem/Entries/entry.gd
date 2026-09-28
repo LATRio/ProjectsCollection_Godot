@@ -27,14 +27,12 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 			if not on_available.is_empty():
 				for action in on_available:
 					action.execute()
+			refresh_entry()
 		QuestSystem.EntryStatus.INPROGRESS:
 			if not on_active.is_empty():
 				for action in on_active:
 					action.execute()
-			if parent_id != -1:
-				QuestSystem.get_entry(parent_id).refresh_entry()
-			else:
-				refresh_entry()
+			refresh_entry()
 		QuestSystem.EntryStatus.COMPLETED:
 			if not on_complete.is_empty():
 				for action in on_complete:
@@ -77,7 +75,6 @@ func get_child_entry_ids() -> PackedInt32Array:
 func evaluate_availability() -> bool:
 	if not availability_condition or availability_condition.evaluate():
 		set_status(QuestSystem.EntryStatus.AVAILABLE)
-		evaluate_activation()
 		return true
 	return false
 
@@ -85,7 +82,6 @@ func evaluate_availability() -> bool:
 func evaluate_activation() -> bool:
 	if not activation_condition or activation_condition.evaluate():
 		set_status(QuestSystem.EntryStatus.INPROGRESS)
-		evaluate_completion() # If required item is already collected, for example.
 		return true
 	return false
 
@@ -114,6 +110,7 @@ func refresh_entry() -> void:
 			refresh_child_entries()
 			if not evaluate_completion():
 				evaluate_failure()
+		# TODO: Mark uncompleted child entries as skipped 
 		_:
 			pass
 

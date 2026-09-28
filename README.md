@@ -3,6 +3,7 @@
 ## Table of Contents
 - [Projects](#projects)
   - [Composition](#composition)
+  - [Quest System (WIP)](#quest-system-wip)
 - [Godot Version](#godot-version)
 - [GDExtension Folder](#gdextension-folder)
 - [Debugging GDExtension C++ on Rider/Clion](#debugging-gdextension-c-on-riderclion)
@@ -71,7 +72,7 @@ To set up your debugging environment, follow these configurations (Assuming GDEx
   
 - **Program Arguments:** 
   ```plaintext
-  --editor  # Optional, use if not working on editor plugins
+  --editor  # Optional, use if working on editor plugins
   ```
 
 - **Working Directory:** 
