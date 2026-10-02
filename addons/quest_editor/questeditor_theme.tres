@@ -1,0 +1,9 @@
+[gd_resource type="Theme" format=3 uid="uid://ctsc3pvpl7x1t"]
+
+[ext_resource type="StyleBox" uid="uid://c1kalg48g8dvj" path="res://addons/quest_editor/dark_panel.tres" id="1_yjwow"]
+
+[resource]
+DarkPanelContainer/base_type = &"PanelContainer"
+DarkPanelContainer/styles/panel = ExtResource("1_yjwow")
+DarkTabContainer/base_type = &"TabContainer"
+DarkTabContainer/styles/panel = ExtResource("1_yjwow")

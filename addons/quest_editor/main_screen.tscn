@@ -1,0 +1,262 @@
+[gd_scene format=3 uid="uid://c5fi6k8d8536p"]
+
+[ext_resource type="Theme" uid="uid://ctsc3pvpl7x1t" path="res://addons/quest_editor/questeditor_theme.tres" id="1_yyx5j"]
+[ext_resource type="StyleBox" uid="uid://c1kalg48g8dvj" path="res://addons/quest_editor/dark_panel.tres" id="2_2aw42"]
+
+[node name="Control" type="MarginContainer" unique_id=1274664644]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=605941108]
+layout_mode = 2
+color = Color(0.1254902, 0.13725491, 0.14901961, 1)
+
+[node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=1831721355]
+layout_mode = 2
+split_offsets = PackedInt32Array(54)
+split_offset = 54
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer" unique_id=2133784570]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="EntriesPanelContainer" type="PanelContainer" parent="HSplitContainer/VBoxContainer" unique_id=1896585139]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+theme = ExtResource("1_yyx5j")
+theme_type_variation = &"DarkPanelContainer"
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/VBoxContainer/EntriesPanelContainer" unique_id=243442778]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/VBoxContainer/EntriesPanelContainer/MarginContainer" unique_id=1301284621]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/VBoxContainer/EntriesPanelContainer/MarginContainer/HBoxContainer" unique_id=1367371414]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quest Hierarchy"
+vertical_alignment = 1
+
+[node name="NewQuestline" type="Button" parent="HSplitContainer/VBoxContainer/EntriesPanelContainer/MarginContainer/HBoxContainer" unique_id=237013682]
+unique_name_in_owner = true
+layout_mode = 2
+text = "+ New Questline"
+
+[node name="EntryTree" type="Tree" parent="HSplitContainer/VBoxContainer" unique_id=1931454779]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EntryDetails" type="ScrollContainer" parent="HSplitContainer" unique_id=1281467678]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/scroll_hint_vertical_color = Color(0.1254902, 0.13725491, 0.14901961, 1)
+vertical_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/EntryDetails" unique_id=347415948]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="HBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer" unique_id=954948708]
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/Header" unique_id=398740849]
+layout_mode = 2
+theme = ExtResource("1_yyx5j")
+theme_type_variation = &"DarkPanelContainer"
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/Header/PanelContainer2" unique_id=1353234601]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="TypeLabel" type="Label" parent="HSplitContainer/EntryDetails/VBoxContainer/Header/PanelContainer2/MarginContainer" unique_id=1487925271]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Questline"
+
+[node name="VSeparator" type="VSeparator" parent="HSplitContainer/EntryDetails/VBoxContainer/Header" unique_id=280042536]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PanelContainer" type="PanelContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/Header" unique_id=789665702]
+layout_mode = 2
+theme = ExtResource("1_yyx5j")
+theme_type_variation = &"DarkPanelContainer"
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/Header/PanelContainer" unique_id=635032084]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/Header/PanelContainer/MarginContainer" unique_id=823017337]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/EntryDetails/VBoxContainer/Header/PanelContainer/MarginContainer/HBoxContainer" unique_id=457857457]
+layout_mode = 2
+text = "ID:"
+
+[node name="IDEdit" type="TextEdit" parent="HSplitContainer/EntryDetails/VBoxContainer/Header/PanelContainer/MarginContainer/HBoxContainer" unique_id=1284150652]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+text = "temp_questline_name_0"
+placeholder_text = "Enter unique ID"
+scroll_fit_content_width = true
+
+[node name="Title" type="PanelContainer" parent="HSplitContainer/EntryDetails/VBoxContainer" unique_id=1645367444]
+layout_mode = 2
+
+[node name="TitleEdit" type="TextEdit" parent="HSplitContainer/EntryDetails/VBoxContainer/Title" unique_id=3423298]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_yyx5j")
+theme_override_colors/search_result_color = Color(0.101960786, 0.105882354, 0.105882354, 1)
+text = "The Questline Test Title"
+placeholder_text = "Enter Display Title"
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="Description" type="PanelContainer" parent="HSplitContainer/EntryDetails/VBoxContainer" unique_id=123438172]
+layout_mode = 2
+
+[node name="DescriptionEdit" type="TextEdit" parent="HSplitContainer/EntryDetails/VBoxContainer/Description" unique_id=678987671]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "The Questline description. This Questline contains bunch of quests and transition conditions and actions."
+placeholder_text = "Enter Display Description"
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="HSeparator" type="HSeparator" parent="HSplitContainer/EntryDetails/VBoxContainer" unique_id=1708294178]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer" unique_id=1709148104]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2" unique_id=671628557]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_yyx5j")
+theme_type_variation = &"DarkTabContainer"
+current_tab = 0
+tabs_visible = false
+
+[node name="Questline_QuestList" type="VBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer" unique_id=951191367]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList" unique_id=1693992347]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer" unique_id=1299642270]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer/HBoxContainer" unique_id=1158925903]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quests in this Questline:"
+
+[node name="NewQuest" type="Button" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer/HBoxContainer" unique_id=1376875456]
+unique_name_in_owner = true
+layout_mode = 2
+text = "+ Add Quest"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList" unique_id=384344976]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="QuestList" type="GridContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2" unique_id=1829477065]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="QuestEntry" type="PanelContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList" unique_id=280768322]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("2_2aw42")
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList/QuestEntry" unique_id=260374061]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList/QuestEntry/MarginContainer" unique_id=1201144173]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList/QuestEntry/MarginContainer/VBoxContainer" unique_id=255723310]
+layout_mode = 2
+
+[node name="QuestDisplayName" type="Label" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList/QuestEntry/MarginContainer/VBoxContainer/HBoxContainer" unique_id=217087151]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "The Quest Test Title"
+text_overrun_behavior = 3
+
+[node name="VSeparator" type="VSeparator" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList/QuestEntry/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1266850732]
+layout_mode = 2
+
+[node name="QuestID" type="Label" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList/QuestEntry/MarginContainer/VBoxContainer/HBoxContainer" unique_id=490798826]
+unique_name_in_owner = true
+layout_mode = 2
+text = "ID: temp_quest_id"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList/QuestEntry/MarginContainer/VBoxContainer" unique_id=1622400458]
+layout_mode = 2
+
+[node name="Description" type="Label" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2/TabContainer/Questline_QuestList/MarginContainer2/QuestList/QuestEntry/MarginContainer/VBoxContainer/HBoxContainer2" unique_id=458996539]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Steps: 2 | Short dotted quest description..."
+
+[node name="HSeparator" type="HSeparator" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer2" unique_id=1010514319]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer" unique_id=1833856994]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer" unique_id=1032319284]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="Label" type="Label" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer/MarginContainer" unique_id=641178410]
+layout_mode = 2
+text = "Conditions"
+
+[node name="ConditionsList" type="VBoxContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer" unique_id=2076016743]
+layout_mode = 2
+theme = ExtResource("1_yyx5j")
+theme_type_variation = &"DarkPanelContainer"
+
+[node name="MarginContainer2" type="MarginContainer" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer" unique_id=1797340731]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="Label" type="Label" parent="HSplitContainer/EntryDetails/VBoxContainer/VBoxContainer/MarginContainer2" unique_id=815999644]
+layout_mode = 2
+text = "Actions"
