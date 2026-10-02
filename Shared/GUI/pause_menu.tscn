@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://ce3ynjktis2cn"]
+
+[ext_resource type="Script" uid="uid://cq6oiwu5l26gk" path="res://Shared/GUI/pause_menu.gd" id="1_2k6la"]
+[ext_resource type="Shader" uid="uid://b084hinnsddpf" path="res://Shared/Shaders/blur.tres" id="2_2k6la"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gkv41"]
+shader = ExtResource("2_2k6la")
+shader_parameter/blur_strength = 2.000000095
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=203162331]
+process_mode = 3
+visible = false
+script = ExtResource("1_2k6la")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1711198776]
+material = SubResource("ShaderMaterial_gkv41")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1270627446]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=40687342]
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="CenterContainer/VBoxContainer" unique_id=689259724]
+layout_mode = 2
+text = "Resume"
+
+[node name="ReturnToMainMenu" type="Button" parent="CenterContainer/VBoxContainer" unique_id=817442103]
+layout_mode = 2
+text = "Return to Main Menu"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ReturnToMainMenu" to="." method="_on_return_to_main_menu_pressed"]

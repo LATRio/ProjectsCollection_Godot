@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cb6b2hoys7jus"]
+
+[ext_resource type="PackedScene" uid="uid://dncnxquy5u7yj" path="res://TestProjects/QuestSystem/DebugScenes/qs_debug.tscn" id="1_irmx0"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1802863940]
+
+[node name="QSDebug" parent="." unique_id=83940530 instance=ExtResource("1_irmx0")]
