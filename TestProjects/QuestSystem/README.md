@@ -18,12 +18,13 @@
 Implementation of feature-rich advanced quest system.
 
 TODO:
+- After main features are implemented and basic testing is done, it will be ported into C++ GDExtension.
 - Switch to using Godot's Resources instead of JSON.
-    - This allows for easier editing of database using custom editor's plugin.
-    - Resource database can be compiled into more compact raw data (the one used right now) for performance and memory efficiency.
-    - Should compilation happen on project export or when game launches?
-      - Making it compile during runtime makes modding support easier. And make runtime(in-game) creation/modification of quests possible?
-      - Compiling on export more suited if database isn't meant to be tampered with.
+	- This allows for easier editing of database using custom editor's plugin.
+	- Resource database can be compiled into more compact raw data (the one used right now) for performance and memory efficiency.
+	- Should compilation happen on project export or when game launches?
+	  - Making it compile during runtime makes modding support easier. And make runtime(in-game) creation/modification of quests possible?
+	  - Compiling on export more suited if database isn't meant to be tampered with.
 - How to handle repeatable quests? Some condition on when it becomes available again?
 - Implement integration with save/load system.
 
@@ -128,9 +129,9 @@ Build-in actions or custom. Perform described action upon execution.
 Types of actions:
 - QuestSystem specific:
   - `SetEntryStatus_Action` - sets given entry's status.
-    - Properties:
-      - `entry_id` - ID of the entry.
-      - `new_status` - new status of the given entry.
+	- Properties:
+	  - `entry_id` - ID of the entry.
+	  - `new_status` - new status of the given entry.
 - TODO:
   - Cancel a Questline, Quest or QuestStep. Player refused to complete it, but it's not a failure either.
   - Complete a Questline, Quest or QuestStep. Useful if there were many ways to complete quest or questline.
@@ -155,10 +156,10 @@ Types of conditions:
       - `lhs` - value on the left side of the compare operation.
       - `rhs` - value on the right side of the compare operation.
         
-      Notes: `lhs` and `rhs` may contain a string that resolves into an acquirable game value like player's level.
+	  Notes: `lhs` and `rhs` may contain a string that resolves into an acquirable game value like player's level.
   - `Objective_Condition` - return `TRUE` is objective is completed.
-    - Properties:
-      - `objective` - name of the objective player must complete. Tracks player's activity and maybe some other stuff.
+	- Properties:
+	  - `objective` - name of the objective player must complete. Tracks player's activity and maybe some other stuff.
   - `False_Condition` and `True_Condition` - conditions that always return false and true respectively. Useful if specific entry condition needs to be set to true by a different entry's action.
 
 - QuestSystem specific

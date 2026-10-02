@@ -42,6 +42,7 @@ TODO list:
 Implementation of a flexible, extensible advanced quest system.
 
 See [QuestSystem](TestProjects/QuestSystem/README.md) (Too long to fit here, also might be a bit outdated)
+Also WIP editor that being worked on inside of `quest_editor_wip` branch.
 
 ---
 
