@@ -14,16 +14,16 @@ enum EntryStatus {
 
 
 # Store everything in Dictionary to eliminate duped IDs
-var entries: Dictionary[int, Entry]
+var entries: Dictionary[StringName, Entry]
 
 # These store actual quest entry objects
-var questlines: PackedInt32Array
-var quests: PackedInt32Array
-var queststeps: PackedInt32Array
+var questlines: Array[StringName]
+var quests: Array[StringName]
+var queststeps: Array[StringName]
 # This stores IDs of entries sorted by their status
 # Prevents going through completed or failed entries and checking their conditions
 # Used for polling conditions of all entries at once
-var all_entries_by_status: Dictionary[QuestSystem.EntryStatus, PackedInt32Array] = {
+var all_entries_by_status: Dictionary[QuestSystem.EntryStatus, Array] = {
 	QuestSystem.EntryStatus.UNKNOWN: [],
 	QuestSystem.EntryStatus.AVAILABLE: [],
 	QuestSystem.EntryStatus.INPROGRESS: [],
@@ -36,7 +36,7 @@ var all_entries_by_status: Dictionary[QuestSystem.EntryStatus, PackedInt32Array]
 }
 
 # Store independent quests that don't belong in any questline
-var free_quests: PackedInt32Array
+var free_quests: Array[StringName]
 
 var _active := false
 
@@ -70,25 +70,25 @@ func _ready() -> void:
 		quest.evaluate_availability()
 
 
-func entry_exists(entry_id: int) -> bool:
+func entry_exists(entry_id: StringName) -> bool:
 	return entries.has(entry_id)
 
 
-func is_questline_id(entry_id: int) -> bool:
+func is_questline_id(entry_id: StringName) -> bool:
 	if not questlines.has(entry_id):
 		push_error("[QuestSystem] Entry ID [{0}] isn't a questline!".format([entry_id]))
 		return false
 	return true
 
 
-func is_quest_id(entry_id: int) -> bool:
+func is_quest_id(entry_id: StringName) -> bool:
 	if quests.has(entry_id) or free_quests.has(entry_id):
 		return true
 	push_error("[QuestSystem] Entry ID [{0}] isn't a quest!".format([entry_id]))
 	return false
 
 
-func is_queststep_id(entry_id: int) -> bool:
+func is_queststep_id(entry_id: StringName) -> bool:
 	if not queststeps.has(entry_id):
 		push_error("[QuestSystem] Entry ID [{0}] isn't a quest step!".format([entry_id]))
 		return false
@@ -123,26 +123,26 @@ func add_entry(entry: Entry) -> bool:
 		return true
 
 
-func get_entry(entry_id: int) -> Entry:
+func get_entry(entry_id: StringName) -> Entry:
 	if entry_exists(entry_id):
 		return entries[entry_id]
 	return null
 
 
-func get_entry_ids_by_status(status: QuestSystem.EntryStatus) -> PackedInt32Array:
+func get_entry_ids_by_status(status: QuestSystem.EntryStatus) -> Array[StringName]:
 	return all_entries_by_status[status]
 
 
-func get_array_of_entry_ids_sorted_by_status() -> Array[PackedInt32Array]:
-	var merged_arr: PackedInt32Array = []
+func get_array_of_entry_ids_sorted_by_status() -> Array[StringName]:
+	var merged_arr: Array[StringName] = []
 	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.UNKNOWN])
 	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.AVAILABLE])
 	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.INPROGRESS])
 	return merged_arr
 
 
-func get_nontrackable_entry_ids() -> PackedInt32Array:
-	var merged_arr: PackedInt32Array = []
+func get_nontrackable_entry_ids() -> Array[StringName]:
+	var merged_arr: Array[StringName] = []
 	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.COMPLETED])
 	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.CANCELLED])
 	merged_arr.append_array(all_entries_by_status[QuestSystem.EntryStatus.FAILED])
@@ -152,39 +152,39 @@ func get_nontrackable_entry_ids() -> PackedInt32Array:
 	return merged_arr
 
 
-func get_questline(entry_id: int) -> QuestlineEntry:
+func get_questline(entry_id: StringName) -> QuestlineEntry:
 	if entry_exists(entry_id) and is_questline_id(entry_id):
 		return entries[entry_id]
 	return null
 
 
-func get_quest(entry_id: int) -> QuestEntry:
+func get_quest(entry_id: StringName) -> QuestEntry:
 	if entry_exists(entry_id):
 		if is_quest_id(entry_id):
 			return entries[entry_id]
 	return null
 
 
-func get_queststep(entry_id: int) -> QuestStepEntry:
+func get_queststep(entry_id: StringName) -> QuestStepEntry:
 	if entry_exists(entry_id) and is_queststep_id(entry_id):
 		return entries[entry_id]
 	return null
 
 
-func set_entry_status(entry_id: int, status: QuestSystem.EntryStatus) -> void:
+func set_entry_status(entry_id: StringName, status: QuestSystem.EntryStatus) -> void:
 	if not entry_exists(entry_id):
 		push_error("[QuestSystem] Cannot set a status of a non existent Entry ID {0}!".format([entry_id]))
 	entries[entry_id].set_status(status)
 
 
-func get_entry_status(entry_id: int) -> QuestSystem.EntryStatus:
+func get_entry_status(entry_id: StringName) -> QuestSystem.EntryStatus:
 	if entry_exists(entry_id):
 		return entries[entry_id].get_status()
 	push_error("[QuestSystem] Cannot get a status of a non existent Entry ID {0}!".format([entry_id]))
 	return QuestSystem.EntryStatus.ERROR
 
 
-func sort_entry_by_status(entry_id: int, old_status: QuestSystem.EntryStatus, new_status: QuestSystem.EntryStatus) -> void:
+func sort_entry_by_status(entry_id: StringName, old_status: QuestSystem.EntryStatus, new_status: QuestSystem.EntryStatus) -> void:
 	if not all_entries_by_status[old_status].has(entry_id):
 		push_error("[QuestSystem] Entry ID [{0}] wasn't added into a list sorted by status!".format([entry_id]))
 	all_entries_by_status[old_status].erase(entry_id)

@@ -3,7 +3,7 @@ extends Entry
 
 static var type := "quest"
 
-var steps: PackedInt32Array # Stores steps in order they're defined in JSON file
+var steps: Array[StringName] # Stores steps in order they're defined in JSON file
 
 
 func add_step(step: QuestStepEntry) -> void:
@@ -22,35 +22,35 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 	return false
 
 
-func get_previous_sibling_entry() -> int:
-	if parent_id == -1:
-		return -1
+func get_previous_sibling_entry() -> StringName:
+	if not parent_id:
+		return &""
 	var questline := QuestSystem.get_questline(parent_id)
 	if not questline:
 		push_error("[QuestSystem] Failed to retrieve a parent Quest[{0}] of QuestStep[{1}]!".format([parent_id, id]))
 	if questline.quests.size() < 2:
-		return -1
+		return &""
 	for idx in range(1, questline.quests.size()):
 		if questline.quests[idx] == id:
 			return questline.quests[idx - 1]
-	return -1
+	return &""
 
 
-func get_next_sibling_entry() -> int:
-	if parent_id == -1:
-		return -1
+func get_next_sibling_entry() -> StringName:
+	if not parent_id:
+		return &""
 	var questline := QuestSystem.get_questline(parent_id)
 	if not questline:
 		push_error("[QuestSystem] Failed to retrieve a parent Quest[{0}] of QuestStep[{1}]!".format([parent_id, id]))
 	if questline.quests.size() < 2:
-		return -1
+		return &""
 	for idx in range(0, questline.quests.size() - 1):
 		if questline.quests[idx] == id:
 			return questline.quests[idx + 1]
-	return -1
+	return &""
 
 
-func get_child_entry_ids() -> PackedInt32Array:
+func get_child_entry_ids() -> Array[StringName]:
 	return steps
 
 

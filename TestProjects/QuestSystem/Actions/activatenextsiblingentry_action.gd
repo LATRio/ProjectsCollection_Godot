@@ -8,7 +8,7 @@ func execute() -> void:
 	var entry := QuestSystem.get_entry(caller_id)
 	if entry:
 		var sibling_id := entry.get_next_sibling_entry()
-		if sibling_id == -1:
+		if not sibling_id:
 			return
 		QuestSystem.set_entry_status(sibling_id, QuestSystem.EntryStatus.INPROGRESS)
 	else:

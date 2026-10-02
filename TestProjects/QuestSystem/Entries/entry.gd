@@ -3,7 +3,7 @@ extends RefCounted
 
 signal entry_updated
 
-var id: int
+var id: StringName
 var status := QuestSystem.EntryStatus.UNKNOWN
 var availability_condition: Condition
 var activation_condition: Condition
@@ -14,7 +14,7 @@ var on_active: Array[Action]
 var on_complete: Array[Action]
 var on_fail: Array[Action]
 
-var parent_id: int = -1
+var parent_id: StringName
 
 
 func set_status(new_status: QuestSystem.EntryStatus) -> bool:
@@ -37,13 +37,13 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 			if not on_complete.is_empty():
 				for action in on_complete:
 					action.execute()
-			if parent_id != -1:
+			if parent_id:
 				QuestSystem.get_entry(parent_id).refresh_entry()
 		QuestSystem.EntryStatus.FAILED:
 			if not on_fail.is_empty():
 				for action in on_fail:
 					action.execute()
-			if parent_id != -1:
+			if parent_id:
 				QuestSystem.get_entry(parent_id).refresh_entry()
 		_:
 			pass
@@ -56,19 +56,19 @@ func get_status() -> QuestSystem.EntryStatus:
 	return status
 
 
-func get_parent_id() -> int:
+func get_parent_id() -> StringName:
 	return parent_id
 
 
-func get_previous_sibling_entry() -> int:
-	return -1
+func get_previous_sibling_entry() -> StringName:
+	return &""
 
 
-func get_next_sibling_entry() -> int:
-	return -1
+func get_next_sibling_entry() -> StringName:
+	return &""
 
 
-func get_child_entry_ids() -> PackedInt32Array:
+func get_child_entry_ids() -> Array[StringName]:
 	return []
 
 

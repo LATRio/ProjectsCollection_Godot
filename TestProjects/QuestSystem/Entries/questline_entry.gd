@@ -3,7 +3,7 @@ extends Entry
 
 static var type := "questline"
 
-var quests: PackedInt32Array
+var quests: Array[StringName]
 
 
 func set_status(new_status: QuestSystem.EntryStatus) -> bool:
@@ -17,7 +17,7 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 	return false
 
 
-func get_child_entry_ids() -> PackedInt32Array:
+func get_child_entry_ids() -> Array[StringName]:
 	return quests
 
 

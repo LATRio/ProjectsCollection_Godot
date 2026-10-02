@@ -1,7 +1,7 @@
 class_name Condition
 extends RefCounted
 
-var caller_id: int
+var caller_id: StringName
 var is_tracking := false
 
 
@@ -12,7 +12,7 @@ func evaluate() -> bool:
 # Forces parent entry to reevaluate their conditions.
 # Only called by 'tracking' conditions
 func notify_parent() -> void:
-	QuestSystem.get_entry(is_tracking).refresh_entry()
+	QuestSystem.get_entry(caller_id).refresh_entry()
 
 
 # Only called by 'tracking' conditions

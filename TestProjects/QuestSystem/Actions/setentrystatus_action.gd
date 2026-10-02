@@ -3,7 +3,7 @@ extends Action
 
 static var type := "SetEntryStatus"
 
-var entry_id: int
+var entry_id: StringName
 var new_status: QuestSystem.EntryStatus
 
 

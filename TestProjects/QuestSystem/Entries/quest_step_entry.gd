@@ -17,28 +17,28 @@ func set_status(new_status: QuestSystem.EntryStatus) -> bool:
 	return false
 
 
-func get_previous_sibling_entry() -> int:
+func get_previous_sibling_entry() -> StringName:
 	var quest := QuestSystem.get_quest(parent_id)
 	if not quest:
 		push_error("[QuestSystem] Failed to retrieve a parent Quest[{0}] of QuestStep[{1}]!".format([parent_id, id]))
 	if quest.steps.size() < 2:
-		return -1
+		return &""
 	for idx in range(1, quest.steps.size()):
 		if quest.steps[idx] == id:
 			return quest.steps[idx - 1]
-	return -1
+	return &""
 
 
-func get_next_sibling_entry() -> int:
+func get_next_sibling_entry() -> StringName:
 	var quest := QuestSystem.get_quest(parent_id)
 	if not quest:
 		push_error("[QuestSystem] Failed to retrieve a parent Quest[{0}] of QuestStep[{1}]!".format([parent_id, id]))
 	if quest.steps.size() < 2:
-		return -1
+		return &""
 	for idx in range(0, quest.steps.size() - 1):
 		if quest.steps[idx] == id:
 			return quest.steps[idx + 1]
-	return -1
+	return &""
 
 
 static func deserialize(json: Dictionary) -> QuestStepEntry:

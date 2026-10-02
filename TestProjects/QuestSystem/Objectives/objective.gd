@@ -1,7 +1,7 @@
 class_name Objective
 extends RefCounted
 
-var parent_step_id: int
+var parent_step_id: StringName
 # TODO: Directly call on_completed or on_failed actions
 var is_completed := false
 var is_failed := false
