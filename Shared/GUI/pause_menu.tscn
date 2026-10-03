@@ -34,9 +34,14 @@ layout_mode = 2
 layout_mode = 2
 text = "Resume"
 
-[node name="ReturnToMainMenu" type="Button" parent="CenterContainer/VBoxContainer" unique_id=817442103]
+[node name="QuitToMainMenu" type="Button" parent="CenterContainer/VBoxContainer" unique_id=817442103]
 layout_mode = 2
-text = "Return to Main Menu"
+text = "Quit to Main Menu"
+
+[node name="ExitToDesktop" type="Button" parent="CenterContainer/VBoxContainer" unique_id=119609900]
+layout_mode = 2
+text = "Exit to Desktop"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/ReturnToMainMenu" to="." method="_on_return_to_main_menu_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/QuitToMainMenu" to="." method="_on_quit_to_main_menu_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ExitToDesktop" to="." method="_on_exit_to_desktop_pressed"]

@@ -27,8 +27,17 @@ layout_mode = 2
 text = "LIST OF PROJECTS"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1249227897]
+[node name="CompositionDemo" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1249227897]
 layout_mode = 2
 text = "CompositionDemo.tscn"
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer" unique_id=595235721]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ExitToDesktop" type="Button" parent="CenterContainer/VBoxContainer" unique_id=735617992]
+layout_mode = 2
+text = "Exit to Desktop"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CompositionDemo" to="." method="_on_composition_demo_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ExitToDesktop" to="." method="_on_exit_to_desktop_pressed"]

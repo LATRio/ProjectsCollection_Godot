@@ -44,7 +44,7 @@ metadata/_custom_type_script = "uid://s2npqkkticrm"
 unique_name_in_owner = true
 path_desired_distance = 0.5
 target_desired_distance = 0.5
-path_height_offset = 0.46
+path_height_offset = 0.4
 debug_path_custom_color = Color(1, 0, 0, 1)
 
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]

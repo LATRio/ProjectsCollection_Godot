@@ -37,6 +37,12 @@ func _on_resume_pressed() -> void:
 	_hide()
 
 
-func _on_return_to_main_menu_pressed() -> void:
-	get_tree().paused = true
+func _on_quit_to_main_menu_pressed() -> void:
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Root.tscn")
+
+
+func _on_exit_to_desktop_pressed() -> void:
+	# This line is needed to trigger custom actions when manually calling quit()
+	# get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	get_tree().quit(0)

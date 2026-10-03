@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://drcykeqwb7hak" path="res://TestProjects/Composition/Components/interactable_component.tscn" id="1_nbrly"]
 [ext_resource type="Script" uid="uid://el5p8qtox5im" path="res://TestProjects/Composition/Scenes/moving_platform.gd" id="1_xesb3"]
+[ext_resource type="Material" uid="uid://dckv1lg14tie3" path="res://Shared/Assets/grey_grid_material.tres" id="3_8cgcx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xah47"]
 size = Vector3(4, 0.075, 4)
@@ -21,7 +22,7 @@ size = Vector3(0.3, 1, 0.3)
 
 [sub_resource type="Curve3D" id="Curve3D_xah47"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5.6000156, 0),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0),
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
@@ -84,10 +85,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.649391, -1.5202326)
 navigation_mesh = SubResource("NavigationMesh_8cgcx")
 
 [node name="Floor" type="MeshInstance3D" parent="Platform/NavigationRegion3D" unique_id=1612810360]
+material_override = ExtResource("3_8cgcx")
 mesh = SubResource("BoxMesh_pntbq")
 
 [node name="ControlPanel" type="MeshInstance3D" parent="Platform/NavigationRegion3D" unique_id=438283336]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.52798903, -1.7422317)
+material_override = ExtResource("3_8cgcx")
 mesh = SubResource("BoxMesh_a8vuv")
 
 [node name="Path3D" type="Path3D" parent="." unique_id=821005855]
