@@ -2,14 +2,12 @@
 
 [ext_resource type="Script" uid="uid://t7bld6ypolc8" path="res://TestProjects/Composition/Scenes/player.gd" id="1_lfm6e"]
 [ext_resource type="Script" uid="uid://c6ls05yx843ck" path="res://TestProjects/Composition/Components/input_component.gd" id="2_6khwd"]
+[ext_resource type="PackedScene" uid="uid://gkkbwrnmwc15" path="res://Shared/Scenes/character_scene.tscn" id="2_li5lq"]
 [ext_resource type="PackedScene" uid="uid://bobn4iq38d2wg" path="res://TestProjects/Composition/Components/third_person_camera_component.tscn" id="3_dbimi"]
 [ext_resource type="Script" uid="uid://qn6fhrwvh4v5" path="res://TestProjects/Composition/Components/movement_component.gd" id="4_2jssq"]
 [ext_resource type="Script" uid="uid://s2npqkkticrm" path="res://TestProjects/Composition/Components/health_component.gd" id="5_kvjfl"]
 [ext_resource type="PackedScene" uid="uid://bhbxypd7cm8s2" path="res://TestProjects/Composition/Components/interactor_component.tscn" id="6_dbimi"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_pntbq"]
-radius = 0.3
-height = 1.789
+[ext_resource type="PackedScene" uid="uid://btxmbeqyi5qk8" path="res://TestProjects/Composition/Components/hurtbox_component.tscn" id="7_rbmd0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dbimi"]
 radius = 0.3
@@ -20,15 +18,12 @@ collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_lfm6e")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1592783622]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895, 0)
-mesh = SubResource("CapsuleMesh_pntbq")
+[node name="CharacterScene" parent="." unique_id=2116624299 instance=ExtResource("2_li5lq")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1801946993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895, 0)
 shape = SubResource("CapsuleShape3D_dbimi")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1662916415]
 
 [node name="ThirdPersonCameraComponent" parent="." unique_id=165318792 instance=ExtResource("3_dbimi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2003525, 0)
@@ -40,15 +35,18 @@ spring_length = 4.0
 unique_name_in_owner = true
 script = ExtResource("2_6khwd")
 
-[node name="MovementComponent" type="Node" parent="." unique_id=737083795 node_paths=PackedStringArray("body")]
+[node name="MovementComponent" type="Node" parent="." unique_id=737083795 node_paths=PackedStringArray("body", "model")]
 unique_name_in_owner = true
 script = ExtResource("4_2jssq")
 body = NodePath("..")
+model = NodePath("../CharacterScene")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=2085628982]
 unique_name_in_owner = true
 script = ExtResource("5_kvjfl")
 
 [node name="InteractorComponent" parent="." unique_id=1277199307 instance=ExtResource("6_dbimi")]
+
+[node name="HurtboxComponent" parent="." unique_id=1122298964 instance=ExtResource("7_rbmd0")]
 
 [editable path="ThirdPersonCameraComponent"]

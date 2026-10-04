@@ -6,6 +6,7 @@ extends CharacterBody3D
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var third_person_camera_component: ThirdPersonCameraComponent = $ThirdPersonCameraComponent
 @onready var interactor_component: InteractorComponent = $InteractorComponent
+@onready var character_scene: CharacterScene = $CharacterScene
 
 
 func _ready() -> void:
@@ -18,6 +19,11 @@ func _physics_process(delta: float) -> void:
 	
 	# PROCESS CAMERA INPUT
 	third_person_camera_component.tick(delta)
+	
+	# PROCESS CHARACTER MESH
+	character_scene.move_dir = movement_component.move_dir
+	character_scene.camera_forward = -third_person_camera_component.camera_forward
+	character_scene.is_on_floor = is_on_floor()
 	
 	# PROCESS MOVEMENT
 	movement_component.move_dir = input_component.move_dir

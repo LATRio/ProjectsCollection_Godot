@@ -7,6 +7,7 @@ extends Node
 @export var body: CharacterBody3D
 @export var model: Node3D
 @export var speed := 4.0
+@export var turn_speed := 10.0
 @export var jump_velocity := 12.0
 @export var gravity_multiplier := 3.0
 
@@ -41,8 +42,8 @@ func tick(delta: float) -> void:
 	
 	# Face model towards movement direction. This is fine for primitive models.
 	if model and direction.length_squared() > 0.001:
-		var look_dir := -Vector3(direction.x, 0.0, direction.z).normalized()
-		model.look_at(model.global_position + look_dir, Vector3.UP)
+		model.rotation.y = lerp_angle(model.rotation.y, atan2(direction.x, direction.z), delta * turn_speed)
+		#model.look_at(model.global_position + look_dir, Vector3.UP)
 
 
 # Utility movement function. Useful for cutscenes or NPCs

@@ -44,7 +44,7 @@ func tick(delta: float) -> void:
 	# Interpolate instead of snapping. Makes camera movement feel more smooth and polished.
 	spring_arm.rotation.x = lerp_angle(spring_arm.rotation.x, target_rotation.y, smoothness * delta)
 	spring_arm.rotation.y = lerp_angle(spring_arm.rotation.y, target_rotation.x, smoothness * delta)
-	camera_forward = spring_arm.transform.basis.z # +Z is forward
-	camera_right = spring_arm.transform.basis.x # +Z is
+	camera_forward = spring_arm.transform.basis.z
+	camera_right = spring_arm.transform.basis.x
 	camera_forward.y = 0.0
 	camera_right.y = 0.0

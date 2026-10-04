@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://btxmbeqyi5qk8"]
+
+[ext_resource type="Script" uid="uid://deymg617wt1uh" path="res://TestProjects/Composition/Components/hurtbox_component.gd" id="1_m1un7"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_m1un7"]
+height = 1.7895508
+radius = 0.3
+
+[node name="HurtboxComponent" type="Area3D" unique_id=1122298964]
+monitoring = false
+script = ExtResource("1_m1un7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2084422918]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8947754, 0)
+shape = SubResource("CylinderShape3D_m1un7")

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://drcykeqwb7hak" path="res://TestProjects/Composition/Components/interactable_component.tscn" id="1_nbrly"]
 [ext_resource type="Script" uid="uid://el5p8qtox5im" path="res://TestProjects/Composition/Scenes/moving_platform.gd" id="1_xesb3"]
-[ext_resource type="Material" uid="uid://dckv1lg14tie3" path="res://Shared/Assets/grey_grid_material.tres" id="3_8cgcx"]
+[ext_resource type="Material" uid="uid://dckv1lg14tie3" path="res://Shared/Assets/Materials/grey_grid_material.tres" id="3_8cgcx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xah47"]
 size = Vector3(4, 0.075, 4)

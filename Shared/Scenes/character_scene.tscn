@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://gkkbwrnmwc15"]
+
+[ext_resource type="PackedScene" uid="uid://bpliw7hxdbeky" path="res://Shared/Assets/Quaternius/AnimationLibrary_Godot_Standard.glb" id="1_px865"]
+[ext_resource type="Script" uid="uid://kkleaukls0s7" path="res://Shared/Scenes/character_scene.gd" id="2_v01ux"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tymkf"]
+animation = &"Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ugcod"]
+animation = &"Jump_Land"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v01ux"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7hlep"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fa0xy"]
+animation = &"Jog_Fwd"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6s10q"]
+animation = &"Jog_Fwd"
+play_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ci1pp"]
+animation = &"Walk"
+play_mode = 1
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_6s10q"]
+sync_mode = 2
+cyclic_length = 1.0
+blend_point_0/node = SubResource("AnimationNodeAnimation_v01ux")
+blend_point_0/pos = 0.0
+blend_point_0/name = &"Idle"
+blend_point_1/node = SubResource("AnimationNodeAnimation_7hlep")
+blend_point_1/pos = 0.5
+blend_point_1/name = &"Walk"
+blend_point_2/node = SubResource("AnimationNodeAnimation_fa0xy")
+blend_point_2/pos = 1.0
+blend_point_2/name = &"Jog_Fwd"
+blend_point_3/node = SubResource("AnimationNodeAnimation_6s10q")
+blend_point_3/pos = -1.0
+blend_point_3/name = &"Jog_Fwd 2"
+blend_point_4/node = SubResource("AnimationNodeAnimation_ci1pp")
+blend_point_4/pos = -0.5
+blend_point_4/name = &"Walk 2"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eetjq"]
+animation = &"Sword_Attack_RM"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_v01ux"]
+filters = ["Rig/Skeleton3D:DEF-f_index.01.L", "Rig/Skeleton3D:DEF-f_index.01.R", "Rig/Skeleton3D:DEF-f_index.02.L", "Rig/Skeleton3D:DEF-f_index.02.R", "Rig/Skeleton3D:DEF-f_index.03.L", "Rig/Skeleton3D:DEF-f_index.03.R", "Rig/Skeleton3D:DEF-f_middle.01.L", "Rig/Skeleton3D:DEF-f_middle.01.R", "Rig/Skeleton3D:DEF-f_middle.02.L", "Rig/Skeleton3D:DEF-f_middle.02.R", "Rig/Skeleton3D:DEF-f_middle.03.L", "Rig/Skeleton3D:DEF-f_middle.03.R", "Rig/Skeleton3D:DEF-f_pinky.01.L", "Rig/Skeleton3D:DEF-f_pinky.01.R", "Rig/Skeleton3D:DEF-f_pinky.02.L", "Rig/Skeleton3D:DEF-f_pinky.02.R", "Rig/Skeleton3D:DEF-f_pinky.03.L", "Rig/Skeleton3D:DEF-f_pinky.03.R", "Rig/Skeleton3D:DEF-f_ring.01.L", "Rig/Skeleton3D:DEF-f_ring.01.R", "Rig/Skeleton3D:DEF-f_ring.02.L", "Rig/Skeleton3D:DEF-f_ring.02.R", "Rig/Skeleton3D:DEF-f_ring.03.L", "Rig/Skeleton3D:DEF-f_ring.03.R", "Rig/Skeleton3D:DEF-forearm.L", "Rig/Skeleton3D:DEF-forearm.R", "Rig/Skeleton3D:DEF-hand.L", "Rig/Skeleton3D:DEF-hand.R", "Rig/Skeleton3D:DEF-head", "Rig/Skeleton3D:DEF-neck", "Rig/Skeleton3D:DEF-shoulder.L", "Rig/Skeleton3D:DEF-shoulder.R", "Rig/Skeleton3D:DEF-spine.002", "Rig/Skeleton3D:DEF-spine.003", "Rig/Skeleton3D:DEF-thumb.01.L", "Rig/Skeleton3D:DEF-thumb.01.R", "Rig/Skeleton3D:DEF-thumb.02.L", "Rig/Skeleton3D:DEF-thumb.02.R", "Rig/Skeleton3D:DEF-thumb.03.L", "Rig/Skeleton3D:DEF-thumb.03.R", "Rig/Skeleton3D:DEF-upper_arm.L", "Rig/Skeleton3D:DEF-upper_arm.R"]
+fadein_time = 0.1
+fadeout_time = 0.2
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_v01ux"]
+graph_offset = Vector2(-493.19135, -24.06781)
+nodes/Movement/node = SubResource("AnimationNodeBlendSpace1D_6s10q")
+nodes/Movement/position = Vector2(-360, 60)
+nodes/SwordAttack/node = SubResource("AnimationNodeAnimation_eetjq")
+nodes/SwordAttack/position = Vector2(-360, 260)
+nodes/SwordAttackOneShot/node = SubResource("AnimationNodeOneShot_v01ux")
+nodes/SwordAttackOneShot/position = Vector2(-40, 120)
+node_connections = [&"output", 0, &"SwordAttackOneShot", &"SwordAttackOneShot", 0, &"Movement", &"SwordAttackOneShot", 1, &"SwordAttack"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7hlep"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ugcod"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"not_on_floor"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2e0hd"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"is_on_floor"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jjphe"]
+xfade_time = 0.2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_v01ux"]
+states/Jump/node = SubResource("AnimationNodeAnimation_tymkf")
+states/Jump/position = Vector2(311, 213)
+states/Jump_Land/node = SubResource("AnimationNodeAnimation_ugcod")
+states/Jump_Land/position = Vector2(483, 213)
+states/Locomotion/node = SubResource("AnimationNodeBlendTree_v01ux")
+states/Locomotion/position = Vector2(391, 100)
+states/Start/position = Vector2(206, 100)
+transitions = ["Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_7hlep"), "Locomotion", "Jump", SubResource("AnimationNodeStateMachineTransition_ugcod"), "Jump", "Jump_Land", SubResource("AnimationNodeStateMachineTransition_2e0hd"), "Jump_Land", "Locomotion", SubResource("AnimationNodeStateMachineTransition_jjphe")]
+graph_offset = Vector2(-103, 76)
+
+[node name="CharacterScene" unique_id=2116624299 instance=ExtResource("1_px865")]
+script = ExtResource("2_v01ux")
+root_motion_track = NodePath("")
+blend_speed = 10.0
+
+[node name="Skeleton3D" parent="Rig" parent_id_path=PackedInt32Array(418003172) index="0" unique_id=429294294]
+bones/1/position = Vector3(-0.002319638, 0.08665242, 0.8767791)
+bones/1/rotation = Quaternion(0.7565197, -0.08836384, -0.07517432, 0.6435984)
+bones/3/rotation = Quaternion(-0.030865356, 0.00011448078, 0.00012511377, 0.9995236)
+bones/4/rotation = Quaternion(0.13874242, 0.00031239202, 0.00039965776, 0.99032843)
+bones/5/rotation = Quaternion(0.018251766, -0.00023693395, -0.00024220205, 0.9998334)
+bones/6/rotation = Quaternion(0.0004241765, 0.09600663, -0.0029009895, 0.99537647)
+bones/7/rotation = Quaternion(-0.5996881, -0.37333557, -0.39432216, 0.5877966)
+bones/8/rotation = Quaternion(-0.28602347, 0.6734682, -0.49620482, 0.46734563)
+bones/9/rotation = Quaternion(0.28239387, 0.04234068, -0.004826758, 0.95835155)
+bones/10/rotation = Quaternion(0.10600874, 0.0063757617, -0.02567434, 0.9940133)
+bones/11/rotation = Quaternion(0.44519043, 0.549369, -0.4451942, 0.5493646)
+bones/12/rotation = Quaternion(0.62334186, 6.134859e-08, 2.1543812e-07, 0.78194946)
+bones/13/rotation = Quaternion(0.62334144, -2.0485645e-07, 6.312424e-08, 0.78194976)
+bones/14/rotation = Quaternion(0.43208978, 0.5386998, -0.45804635, 0.5597271)
+bones/15/rotation = Quaternion(0.62334126, 0.0009434775, 0.0011836428, 0.7819485)
+bones/16/rotation = Quaternion(0.6233411, -0.00070432085, -0.00088335155, 0.78194934)
+bones/17/rotation = Quaternion(0.50405717, 0.5115414, -0.43515158, 0.54304224)
+bones/18/rotation = Quaternion(0.62316287, -0.020061474, 0.014925486, 0.7816923)
+bones/19/rotation = Quaternion(0.6233415, 0.00037982548, 0.0004766172, 0.7819496)
+bones/20/rotation = Quaternion(0.43533966, 0.541356, -0.45490375, 0.55720335)
+bones/21/rotation = Quaternion(0.62334186, 7.39393e-06, 9.580444e-06, 0.78194946)
+bones/22/rotation = Quaternion(0.6233412, -0.00066514494, -0.0008344997, 0.78194934)
+bones/23/rotation = Quaternion(0.29083833, 0.9496493, 0.11458343, 0.02121698)
+bones/24/rotation = Quaternion(0.21938998, 0.023802565, -0.0053047203, 0.97533244)
+bones/25/rotation = Quaternion(0.6873881, -0.00030906757, -0.00044465755, 0.72629017)
+bones/26/rotation = Quaternion(-0.63580275, 0.31039107, 0.329685, 0.6250761)
+bones/27/rotation = Quaternion(-0.29407832, -0.6805758, 0.46965355, 0.47933295)
+bones/28/rotation = Quaternion(0.36727917, -0.15343839, 0.061569776, 0.9152989)
+bones/29/rotation = Quaternion(0.11670906, 0.0029166911, 0.04477862, 0.9921519)
+bones/30/rotation = Quaternion(0.44519085, -0.54936874, 0.44519404, 0.5493645)
+bones/31/rotation = Quaternion(0.62334144, 2.1751784e-07, 6.333713e-08, 0.78194976)
+bones/32/rotation = Quaternion(0.62334156, 1.524512e-07, -2.1200266e-07, 0.7819497)
+bones/33/rotation = Quaternion(0.43209013, -0.5386997, 0.45804662, 0.55972695)
+bones/34/rotation = Quaternion(0.6233408, -0.0009435098, -0.0011834028, 0.78194886)
+bones/35/rotation = Quaternion(0.62334144, 0.00070417376, 0.0008831483, 0.78194904)
+bones/36/rotation = Quaternion(0.5040568, -0.5115414, 0.43515167, 0.5430425)
+bones/37/rotation = Quaternion(0.6231631, 0.020061096, -0.014925336, 0.78169215)
+bones/38/rotation = Quaternion(0.6233418, -0.00038015255, -0.00047653235, 0.78194934)
+bones/39/rotation = Quaternion(0.4353399, -0.5413559, 0.45490402, 0.5572031)
+bones/40/rotation = Quaternion(0.62334114, -7.5530165e-06, -9.2769305e-06, 0.78195)
+bones/41/rotation = Quaternion(0.6233416, 0.0006649239, 0.0008343264, 0.78194886)
+bones/42/rotation = Quaternion(-0.29083848, 0.9496492, 0.11458354, -0.021217033)
+bones/43/rotation = Quaternion(0.21939008, -0.023802595, 0.0053048474, 0.9753324)
+bones/44/rotation = Quaternion(0.6873882, 0.00030923449, 0.00044453875, 0.7262901)
+bones/45/rotation = Quaternion(0.9642778, 0.114133865, -0.014072395, 0.23862933)
+bones/46/rotation = Quaternion(0.17864841, -0.11199184, 0.02046191, 0.97730446)
+bones/47/rotation = Quaternion(-0.4928115, 0.02015324, 0.096655406, 0.8645164)
+bones/48/rotation = Quaternion(-0.00013717604, 0.9643068, -0.26478708, -0.0004994209)
+bones/49/rotation = Quaternion(0.9934466, -0.112559915, 0.013878319, 0.014200297)
+bones/50/rotation = Quaternion(0.12168475, 0.35776162, -0.047091786, 0.9246523)
+bones/51/rotation = Quaternion(-0.5838167, -0.051438596, -0.16104442, 0.7940888)
+bones/52/rotation = Quaternion(-0.00013704659, 0.9643068, -0.26478708, -0.000499421)
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2" unique_id=1029472491]
+tree_root = SubResource("AnimationNodeStateMachine_v01ux")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/is_on_floor = false
+parameters/conditions/not_on_floor = false
+parameters/Locomotion/Movement/blend_position = 0.0
+parameters/Locomotion/SwordAttackOneShot/active = false
+parameters/Locomotion/SwordAttackOneShot/internal_active = false
+parameters/Locomotion/SwordAttackOneShot/request = 0

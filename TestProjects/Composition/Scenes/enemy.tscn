@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cg3168re5k2ln" path="res://TestProjects/Composition/Scenes/enemy.gd" id="1_ik2m1"]
 [ext_resource type="Script" uid="uid://qn6fhrwvh4v5" path="res://TestProjects/Composition/Components/movement_component.gd" id="2_e82u0"]
 [ext_resource type="Script" uid="uid://s2npqkkticrm" path="res://TestProjects/Composition/Components/health_component.gd" id="3_qodjt"]
+[ext_resource type="PackedScene" uid="uid://btxmbeqyi5qk8" path="res://TestProjects/Composition/Components/hurtbox_component.tscn" id="4_qodjt"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ly7sk"]
 radius = 0.3
@@ -14,6 +15,10 @@ albedo_color = Color(1, 0.1287576, 0.07650435, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ik2m1"]
 radius = 0.3
 height = 1.789414
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qodjt"]
+height = 1.7983398
+radius = 0.3
 
 [node name="Enemy" type="CharacterBody3D" unique_id=1543108756 groups=["Enemies"]]
 collision_layer = 4
@@ -47,5 +52,13 @@ target_desired_distance = 0.5
 path_height_offset = 0.4
 debug_path_custom_color = Color(1, 0, 0, 1)
 
+[node name="HurtboxComponent" parent="." unique_id=335533948 instance=ExtResource("4_qodjt")]
+
+[node name="CollisionShape3D" parent="HurtboxComponent" index="0" unique_id=2084422918]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8991699, 0)
+shape = SubResource("CylinderShape3D_qodjt")
+
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_navigation_finished"]
 [connection signal="path_changed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_path_changed"]
+
+[editable path="HurtboxComponent"]
