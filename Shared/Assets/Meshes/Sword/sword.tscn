@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://18q5nyitwqc5"]
+
+[ext_resource type="PackedScene" uid="uid://smgj7oq3t1ly" path="res://Shared/Assets/Meshes/Sword/Sword.FBX" id="1_ywnbb"]
+[ext_resource type="Texture2D" uid="uid://ln1srffj1lwv" path="res://Shared/Assets/Meshes/Sword/Textures/Sword_Base_Color.png" id="2_6x3el"]
+[ext_resource type="Texture2D" uid="uid://ckjdlwaj2tpla" path="res://Shared/Assets/Meshes/Sword/Textures/Sword_Metallic.png" id="3_3g27v"]
+[ext_resource type="Texture2D" uid="uid://b30i1bk03jo0w" path="res://Shared/Assets/Meshes/Sword/Textures/Sword_occlusion.png" id="3_eltyy"]
+[ext_resource type="Texture2D" uid="uid://dv0qidodd5f6q" path="res://Shared/Assets/Meshes/Sword/Textures/Sword_Roughness.png" id="5_ivsfm"]
+[ext_resource type="PackedScene" uid="uid://btxmbeqyi5qk8" path="res://TestProjects/Composition/Components/hurtbox_component.tscn" id="6_ivsfm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ywnbb"]
+albedo_texture = ExtResource("2_6x3el")
+metallic = 1.0
+metallic_texture = ExtResource("3_3g27v")
+roughness_texture = ExtResource("5_ivsfm")
+normal_enabled = true
+ao_enabled = true
+ao_texture = ExtResource("3_eltyy")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ivsfm"]
+height = 1.3494873
+radius = 0.2
+
+[node name="Sword" unique_id=475490569 instance=ExtResource("1_ywnbb")]
+
+[node name="Plane003" parent="." index="0" unique_id=906346731]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 1.4533997e-08, 0.46974373, -6.3586235e-08)
+surface_material_override/0 = SubResource("StandardMaterial3D_ywnbb")
+
+[node name="HurtboxComponent" parent="." index="1" unique_id=1122298964 instance=ExtResource("6_ivsfm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.93329966, 0)
+
+[node name="CollisionShape3D" parent="HurtboxComponent" index="0" unique_id=2084422918]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68634033, 0)
+shape = SubResource("CylinderShape3D_ivsfm")
+
+[editable path="HurtboxComponent"]

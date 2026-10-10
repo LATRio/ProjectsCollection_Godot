@@ -15,8 +15,10 @@ var move_dir := Vector2.ZERO
 var camera_forward := Vector3.ZERO
 var camera_right := Vector3.ZERO
 var wants_jump := false
+var root_motion_position := Vector3.ZERO
 
 var needs_to_move := false
+var motion_velocity := Vector3.ZERO
 
 func tick(delta: float) -> void:
 	if not body:
@@ -26,8 +28,10 @@ func tick(delta: float) -> void:
 	# Apply left and right movement to the Camera's right vector
 	# Apply up and down movement to the Camera's up vector
 	var direction := Vector3(camera_right * move_dir.x + camera_forward * move_dir.y).normalized()
-	body.velocity.x = direction.x * speed
-	body.velocity.z = direction.z * speed
+	if model:
+		motion_velocity = (model.global_transform.basis * root_motion_position) / delta
+	body.velocity.x = direction.x * speed + motion_velocity.x
+	body.velocity.z = direction.z * speed + motion_velocity.z
 	
 	# Gravity
 	if not body.is_on_floor():

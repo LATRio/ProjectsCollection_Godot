@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dncnxquy5u7yj"]
+
+[ext_resource type="Script" uid="uid://bji4fw0dkpbxm" path="res://TestProjects/Composition/DebugScenes/qs_debug.gd" id="1_ltjfv"]
+
+[node name="QSDebug" type="Tree" unique_id=83940530]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -769.0
+offset_bottom = -408.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+column_titles_visible = true
+script = ExtResource("1_ltjfv")

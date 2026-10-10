@@ -9,6 +9,7 @@ var jump_pressed := false
 var heal_pressed := false
 var hurt_pressed := false
 var interact_pressed := false
+var attack_pressed := false
 var track_me_pressed := false
 
 var mouse_out_of_window := false
@@ -48,4 +49,5 @@ func update() -> void:
 	heal_pressed = Input.is_action_just_pressed("heal")
 	hurt_pressed = Input.is_action_just_pressed("hurt")
 	interact_pressed = Input.is_action_just_pressed("interact")
+	attack_pressed = Input.is_action_just_pressed("attack")
 	track_me_pressed = Input.is_action_just_pressed("track_me")

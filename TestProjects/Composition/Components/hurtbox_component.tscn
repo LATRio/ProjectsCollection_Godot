@@ -7,6 +7,8 @@ height = 1.7895508
 radius = 0.3
 
 [node name="HurtboxComponent" type="Area3D" unique_id=1122298964]
+collision_layer = 32
+collision_mask = 16
 monitoring = false
 script = ExtResource("1_m1un7")
 

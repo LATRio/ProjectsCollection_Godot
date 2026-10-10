@@ -7,5 +7,4 @@ extends Area3D
 
 func hitscan() -> void:
 	for area in get_overlapping_areas():
-		if area is HurtboxComponent:
-			pass
+		pass

@@ -3,3 +3,4 @@
 *.png=binary
 *.res=binary
 *.glb=binary
+*.fbx=binary

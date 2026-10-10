@@ -17,9 +17,11 @@ height = 1.789414
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_lfm6e")
+metadata/type = "player"
 
 [node name="CharacterScene" parent="." unique_id=2116624299 instance=ExtResource("2_li5lq")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+root_motion_track = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1801946993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895, 0)

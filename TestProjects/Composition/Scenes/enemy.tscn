@@ -24,6 +24,7 @@ radius = 0.3
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_ik2m1")
+metadata/type = "enemy"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=727220845]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.895, 0)
@@ -52,7 +53,8 @@ target_desired_distance = 0.5
 path_height_offset = 0.4
 debug_path_custom_color = Color(1, 0, 0, 1)
 
-[node name="HurtboxComponent" parent="." unique_id=335533948 instance=ExtResource("4_qodjt")]
+[node name="HurtboxComponent" parent="." unique_id=335533948 node_paths=PackedStringArray("health_component") instance=ExtResource("4_qodjt")]
+health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape3D" parent="HurtboxComponent" index="0" unique_id=2084422918]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8991699, 0)

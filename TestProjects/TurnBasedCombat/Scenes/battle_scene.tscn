@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://c05st28gkyenk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4uw7f"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_myfhm"]
+sky_material = SubResource("ProceduralSkyMaterial_4uw7f")
+
+[sub_resource type="Environment" id="Environment_xgrfs"]
+background_mode = 2
+sky = SubResource("Sky_myfhm")
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pntbq"]
+size = Vector2(50, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4uw7f"]
+albedo_color = Color(0.32421875, 0.32421875, 0.32421875, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4uw7f"]
+radius = 0.3
+
+[node name="BattleScene" type="Node3D" unique_id=507464540]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=911053988]
+environment = SubResource("Environment_xgrfs")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=516133686]
+transform = Transform3D(0.5000001, -0.75, 0.4330126, 2.7805946e-08, 0.49999994, 0.86602545, -0.8660254, -0.4330128, 0.25, 0.056853652, 0, -0.61891586)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=154412190]
+mesh = SubResource("PlaneMesh_pntbq")
+surface_material_override/0 = SubResource("StandardMaterial3D_4uw7f")
+metadata/_edit_lock_ = true
+
+[node name="Combatants" type="Node3D" parent="." unique_id=112979299]
+
+[node name="Node3D" type="Node3D" parent="Combatants" unique_id=1472914308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Combatants/Node3D" unique_id=1162468383]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4uw7f")
+
+[node name="Node3D2" type="Node3D" parent="Combatants" unique_id=2048356173]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 0.99999994, -1, 0, 3)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Combatants/Node3D2" unique_id=302433310]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4uw7f")
+
+[node name="Node3D3" type="Node3D" parent="Combatants" unique_id=440028142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Combatants/Node3D3" unique_id=1768048923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4uw7f")
+
+[node name="Node3D4" type="Node3D" parent="Combatants" unique_id=578387065]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Combatants/Node3D4" unique_id=2036213277]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4uw7f")
+
+[node name="Node3D5" type="Node3D" parent="Combatants" unique_id=1106572128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2.9999998)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Combatants/Node3D5" unique_id=1158555175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4uw7f")
+
+[node name="Node3D6" type="Node3D" parent="Combatants" unique_id=181457867]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 0.99999994, 1, 0, -3)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Combatants/Node3D6" unique_id=1530116754]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4uw7f")
+
+[node name="Node3D7" type="Node3D" parent="Combatants" unique_id=303670342]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Combatants/Node3D7" unique_id=23685952]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4uw7f")
+
+[node name="Node3D8" type="Node3D" parent="Combatants" unique_id=1823431796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -3.0000002)
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Combatants/Node3D8" unique_id=1112981444]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4uw7f")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1911274707]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 6, 6)
+current = true
+fov = 50.5

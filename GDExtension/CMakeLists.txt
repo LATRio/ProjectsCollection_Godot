@@ -24,6 +24,7 @@ if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/godot-cpp/src")
         COMMAND_ERROR_IS_FATAL ANY
     )
 endif()
+set(GODOTCPP_API_VERSION 4.7)
 add_subdirectory(godot-cpp SYSTEM)
 
 # When compiling for emscripten, this toolchainhack needs to be included.
@@ -47,14 +48,29 @@ project(godot-cpp-lib
     LANGUAGES CXX
 )
 
-add_library(${LIBNAME} SHARED)
+add_library(${LIBNAME} SHARED
+        src/register_types.cpp
+        src/register_types.h
+        src/quest_system/quest_system.cpp
+        src/quest_system/quest_system.hpp
+        src/quest_system/conditions/condition.hpp
+        src/quest_system/entries/entry.cpp
+        src/quest_system/entries/entry.hpp
+        src/quest_system/entries/questline_entry.cpp
+        src/quest_system/entries/questline_entry.hpp
+        src/quest_system/entries/quest_entry.cpp
+        src/quest_system/entries/quest_entry.hpp
+        src/quest_system/entries/quest_step_entry.cpp
+        src/quest_system/entries/quest_step_entry.hpp
+        src/quest_system/objectives/objective.hpp
+        src/quest_system/actions/action.hpp
+        src/object_serialization_registry/object_serialization_registry.cpp
+        src/object_serialization_registry/object_serialization_registry.hpp
+)
 
-target_sources(${LIBNAME}
-    PRIVATE
-    src/register_types.cpp
-    src/register_types.h
-    src/example_class.cpp
-    src/example_class.h
+target_include_directories(${LIBNAME} PRIVATE
+        src/quest_system
+        src
 )
 
 # Fetch a list of the xml files to use for documentation and add to our target
@@ -69,8 +85,8 @@ endif()
 
 target_link_libraries(${LIBNAME} PRIVATE godot-cpp)
 
-# Require at least C++17 for this target
-set_property(TARGET ${LIBNAME} PROPERTY CXX_STANDARD 17)
+# Require at least C++20 for this target
+set_property(TARGET ${LIBNAME} PROPERTY CXX_STANDARD 20)
 
 set_target_properties(${LIBNAME}
     PROPERTIES

@@ -24,12 +24,15 @@ func _physics_process(delta: float) -> void:
 	character_scene.move_dir = movement_component.move_dir
 	character_scene.camera_forward = -third_person_camera_component.camera_forward
 	character_scene.is_on_floor = is_on_floor()
+	if input_component.attack_pressed:
+		character_scene.attack()
 	
 	# PROCESS MOVEMENT
 	movement_component.move_dir = input_component.move_dir
 	movement_component.camera_forward = third_person_camera_component.camera_forward
 	movement_component.camera_right = third_person_camera_component.camera_right
 	movement_component.wants_jump = input_component.jump_pressed
+	movement_component.root_motion_position = character_scene.anim_tree.get_root_motion_position()
 	movement_component.tick(delta)
 	
 	# PROCESS HEALTH
