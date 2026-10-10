@@ -16,13 +16,22 @@ Ref<QS::QuestEntry> QS::QuestEntry::_deserialize(const Dictionary &p_json) {
 
 	Entry::_deserialize(entry, p_json);
 
-	Array steps{p_json["steps"]};
+	Array steps = p_json["steps"];
+	if (steps.is_empty()) {
+		QuestSystem::printerr("'steps' of Quest ID [{0}] is empty.", entry->m_id);
+		return nullptr;
+	}
+	UtilityFunctions::print("QuestEntry::_deserialize: ", steps);
 	for (const auto &step_json : steps) {
 		if (step_json.get_type() != Variant::DICTIONARY) {
 			QuestSystem::printerr("Quest ID [{0}] must only contain dictionary values in 'steps'!", entry->m_id);
-			continue;
+			return nullptr;
 		}
 		Ref<QuestStepEntry> step_obj{ObjectSerializationRegistry::get_singleton()->deserialize_json(step_json)};
+		if (!step_obj.is_valid()) {
+			QuestSystem::printerr("Dictionary in 'steps' of Quest ID [{0}] is invalid.", entry->m_id);
+			return nullptr;
+		}
 		step_obj->set_parent_id(entry->m_id);
 		entry->m_steps.push_back(step_obj->get_id());
 		QuestSystem::get_singleton()->add_queststep(step_obj);

@@ -1,0 +1,55 @@
+{
+	"questlines": [
+		{
+			"id": "l0",
+			"type": "questline",
+			"quests": [
+				{
+					"id": "l0q0",
+					"type": "quest",
+					"steps": [
+						{
+							"id": "l0q0s0",
+							"type": "step",
+							"objective": {
+								"type": "DamagePlayer"
+							}
+						}
+					]
+				},
+				{
+					"id": "l0q1",
+					"type": "quest",
+					"availability_condition": {
+						"type": "PreviousSiblingEntryIsCompleted",
+						"comment": "Made available by previous quest on completion. TODO: automate if empty"
+					},
+					"steps": [
+						{
+							"id": "l0q1s0",
+							"type": "step",
+							"objective": {
+								"type": "HealPlayer"
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"free_quests": [
+		{
+			"id": "q0",
+			"type": "quest",
+			"steps": [
+				{
+					"id": "q0s0",
+					"type": "step",
+					"objective": {
+						"type": "DamagePlayer"
+					}
+				}
+			]
+		}
+	]
+}

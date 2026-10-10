@@ -120,12 +120,12 @@ public:
 
 template <typename... Args>
 void QuestSystem::printerr(const String &p_arg, const Args &...p_args) {
-	UtilityFunctions::printerr("[QuestSystem] ", p_arg.format(Array::make(p_args...)));
+	UtilityFunctions::push_error("[QuestSystem] ", p_arg.format(Array::make(p_args...)));
 }
 
 template <typename... Args>
 void QuestSystem::printerr(const Error p_error, const String &p_arg, const Args &...p_args) {
-	UtilityFunctions::printerr("[QuestSystem][", UtilityFunctions::error_string(p_error), "] ", p_arg.format(Array::make(p_args...)));
+	UtilityFunctions::push_error("[QuestSystem][", UtilityFunctions::error_string(p_error), "] ", p_arg.format(Array::make(p_args...)));
 }
 
 } //namespace QS

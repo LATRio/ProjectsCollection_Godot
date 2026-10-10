@@ -11,6 +11,7 @@ namespace QS {
 
 void QuestSystem::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("load_database", "filepath"), &QuestSystem::load_database);
+	ClassDB::bind_method(D_METHOD("refresh_entry", "id"), &QuestSystem::refresh_entry);
 	ClassDB::bind_method(D_METHOD("get_entry", "id"), &QuestSystem::get_entry);
 	ClassDB::bind_method(D_METHOD("get_questline", "id"), &QuestSystem::get_questline);
 	ClassDB::bind_method(D_METHOD("get_quest", "id"), &QuestSystem::get_quest);
@@ -41,21 +42,22 @@ void QuestSystem::load_database(const String &p_filepath) {
 	if (!db_file.is_valid()) {
 		printerr(FileAccess::get_open_error(), "Failed to open database file {0}.", p_filepath);
 	}
-	JSON json{};
-	if (const Error res{ json.parse(db_file->get_as_text()) }; res != OK) {
-		printerr(FileAccess::get_open_error(), "Failed to parse a json. Line {0}: {1}.", json.get_error_line(), json.get_error_message());
+	Ref json{memnew(JSON)};
+	if (const Error res{ json->parse(db_file->get_as_text()) }; res != OK) {
+		printerr(FileAccess::get_open_error(), "Failed to parse a json. Line {0}: {1}.", json->get_error_line(), json->get_error_message());
 	}
-	if (json.get_data().get_type() != Variant::DICTIONARY) {
+	db_file->close();
+	if (json->get_data().get_type() != Variant::DICTIONARY) {
 		printerr("Failed to parse a json. Root isn't a dictionary");
 	}
-	const Dictionary dict_json{ json.get_data() };
+	const Dictionary dict_json{ json->get_data() };
 	if (dict_json.has("questlines")) {
-		Array questlines{dict_json["questlines"]};
+		Array questlines = dict_json["questlines"];
 		for (const auto &questline_json : questlines) {
-			if (questline_json) {
+			if (questline_json.get_type() == Variant::DICTIONARY) {
 				Ref<QuestlineEntry> entry{ ObjectSerializationRegistry::get_singleton()->deserialize_json(questline_json) };
 				if (!entry.is_valid()) {
-					printerr("Cannot add null entry! JSON", questline_json);
+					printerr("Cannot add null entry! JSON: {0}", questline_json);
 					continue;
 				}
 				add_questline(entry);
@@ -63,12 +65,12 @@ void QuestSystem::load_database(const String &p_filepath) {
 		}
 	}
 	if (dict_json.has("free_quests")) {
-		Array free_quests{dict_json["free_quests"]};
+		Array free_quests = dict_json["free_quests"];
 		for (const auto &quest_json : free_quests) {
-			if (quest_json) {
+			if (quest_json.get_type() == Variant::DICTIONARY) {
 				Ref<QuestEntry> entry{ ObjectSerializationRegistry::get_singleton()->deserialize_json(quest_json) };
 				if (!entry.is_valid()) {
-					printerr("Cannot add null entry! JSON", quest_json);
+					printerr("Cannot add null entry! JSON: {0}", quest_json);
 					continue;
 				}
 				add_quest(entry, true);
@@ -86,6 +88,7 @@ void QuestSystem::load_database(const String &p_filepath) {
 }
 
 void QuestSystem::refresh_entry(const StringName &p_id) {
+	get_entry(p_id)->refresh_entry();
 }
 
 bool QuestSystem::entry_exists(const StringName &p_id) const {

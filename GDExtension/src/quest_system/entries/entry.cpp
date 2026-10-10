@@ -181,28 +181,28 @@ void Entry::_deserialize(const Ref<Entry> &p_entry, const Dictionary &p_json) {
 	p_entry->m_failure_condition->set_caller_id(p_entry->m_id);
 
 	if (p_json.has("on_available")) {
-		Array actions{ p_json["on_available"] };
+		Array actions = p_json["on_available"];
 		for (const auto &action_json : actions) {
 			p_entry->m_on_available.push_back(ObjectSerializationRegistry::get_singleton()->deserialize_json(action_json));
 			cast_to<Action>(p_entry->m_on_available.back())->set_caller_id(p_entry->m_id);
 		}
 	}
 	if (p_json.has("on_active")) {
-		Array actions{ p_json["on_active"] };
+		Array actions = p_json["on_active"];
 		for (const auto &action_json : actions) {
 			p_entry->m_on_available.push_back(ObjectSerializationRegistry::get_singleton()->deserialize_json(action_json));
 			cast_to<Action>(p_entry->m_on_active.back())->set_caller_id(p_entry->m_id);
 		}
 	}
 	if (p_json.has("on_complete")) {
-		Array actions{ p_json["on_complete"] };
+		Array actions = p_json["on_complete"];
 		for (const auto &action_json : actions) {
 			p_entry->m_on_complete.push_back(ObjectSerializationRegistry::get_singleton()->deserialize_json(action_json));
 			cast_to<Action>(p_entry->m_on_complete.back())->set_caller_id(p_entry->m_id);
 		}
 	}
 	if (p_json.has("on_fail")) {
-		Array actions{ p_json["on_fail"] };
+		Array actions = p_json["on_fail"];
 		for (const auto &action_json : actions) {
 			p_entry->m_on_fail.push_back(ObjectSerializationRegistry::get_singleton()->deserialize_json(action_json));
 			cast_to<Action>(p_entry->m_on_fail.back())->set_caller_id(p_entry->m_id);

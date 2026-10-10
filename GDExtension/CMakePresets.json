@@ -6,6 +6,7 @@
 			"displayName": "Debug",
 			"generator": "Ninja",
 			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
 				"GODOTCPP_TARGET": "template_debug"
 			}
 		},
@@ -14,6 +15,7 @@
 			"displayName": "Release",
 			"generator": "Ninja",
 			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release",
 				"GODOTCPP_TARGET": "template_release"
 			}
 		}

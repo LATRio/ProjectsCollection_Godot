@@ -7,6 +7,8 @@
 namespace QS {
 
 void QuestStepEntry::_bind_methods() {
+	ClassDB::bind_static_method("QuestStepEntry", D_METHOD("_get_type"), &QuestStepEntry::_get_type);
+	ClassDB::bind_static_method("QuestStepEntry", D_METHOD("_deserialize", "p_json"), &QuestStepEntry::_deserialize);
 }
 
 Ref<QuestStepEntry> QuestStepEntry::_deserialize(const Dictionary &p_json) {

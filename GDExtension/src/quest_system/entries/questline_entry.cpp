@@ -18,17 +18,24 @@ Ref<QuestlineEntry> QuestlineEntry::_deserialize(const Dictionary &p_json) {
 
 	Entry::_deserialize(entry, p_json);
 
-	Array quests{p_json["quests"]};
+	Array quests = p_json["quests"];
+	if (quests.is_empty()) {
+		QuestSystem::printerr("'quests' of Questline ID [{0}] is empty.", entry->m_id);
+		return nullptr;
+	}
 	for (const auto &quest_json : quests) {
-		if (quest_json.get_type() == Variant::DICTIONARY) {
-			Ref<QuestEntry> quest_obj = ObjectSerializationRegistry::get_singleton()->deserialize_json(quest_json);
-			quest_obj->set_parent_id(entry->m_id);
-			entry->m_quests.push_back(quest_obj->get_id());
-			QuestSystem::get_singleton()->add_quest(quest_obj);
-		} else {
-			QuestSystem::printerr("Questline ID [{0}] must only contain dictionary value in 'quests'!", entry->m_id);
+		if (quest_json.get_type() != Variant::DICTIONARY) {
+			QuestSystem::printerr("Questline ID [{0}] must only contain dictionary values in 'quests'!", entry->m_id);
 			return nullptr;
 		}
+		Ref<QuestEntry> quest_obj = ObjectSerializationRegistry::get_singleton()->deserialize_json(quest_json);
+		if (!quest_obj.is_valid()) {
+			QuestSystem::printerr("Dictionary in 'quests' of Questline ID [{0}] is invalid.", entry->m_id);
+			return nullptr;
+		}
+		quest_obj->set_parent_id(entry->m_id);
+		entry->m_quests.push_back(quest_obj->get_id());
+		QuestSystem::get_singleton()->add_quest(quest_obj);
 	}
 	return entry;
 }
