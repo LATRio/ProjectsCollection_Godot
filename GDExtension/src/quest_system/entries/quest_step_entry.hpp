@@ -15,7 +15,7 @@ protected:
 
 public:
 	static String _get_type() {
-		return "questline";
+		return "step";
 	}
 
 	StringName get_previous_sibling_entry_id() const override { return ""; }

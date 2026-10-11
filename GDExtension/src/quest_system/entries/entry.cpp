@@ -172,13 +172,13 @@ void Entry::_deserialize(const Ref<Entry> &p_entry, const Dictionary &p_json) {
 		p_entry->m_completion_condition = ObjectSerializationRegistry::get_singleton()->deserialize_json(p_json["completion_condition"]);
 	} else {
 	}
-	p_entry->m_completion_condition->set_caller_id(p_entry->m_id);
+	//p_entry->m_completion_condition->set_caller_id(p_entry->m_id);
 
 	if (p_json.has("failure_condition")) {
 		p_entry->m_failure_condition = ObjectSerializationRegistry::get_singleton()->deserialize_json(p_json["failure_condition"]);
 	} else {
 	}
-	p_entry->m_failure_condition->set_caller_id(p_entry->m_id);
+	//p_entry->m_failure_condition->set_caller_id(p_entry->m_id);
 
 	if (p_json.has("on_available")) {
 		Array actions = p_json["on_available"];

@@ -25,6 +25,7 @@ if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/godot-cpp/src")
     )
 endif()
 set(GODOTCPP_API_VERSION 4.7)
+#set(GODOTCPP_DEV_BUILD ON)
 add_subdirectory(godot-cpp SYSTEM)
 
 # When compiling for emscripten, this toolchainhack needs to be included.

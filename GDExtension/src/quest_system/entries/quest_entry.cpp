@@ -5,8 +5,8 @@
 #include "quest_system.hpp"
 
 void QS::QuestEntry::_bind_methods() {
-	ClassDB::bind_static_method("QuestEntry", D_METHOD("_get_type"), &QuestEntry::_get_type);
-	ClassDB::bind_static_method("QuestEntry", D_METHOD("_deserialize", "p_json"), &QuestEntry::_deserialize);
+	ClassDB::bind_static_method(get_class_static(), D_METHOD("_get_type"), &QuestEntry::_get_type);
+	ClassDB::bind_static_method(get_class_static(), D_METHOD("_deserialize", "p_json"), &QuestEntry::_deserialize);
 }
 
 Ref<QS::QuestEntry> QS::QuestEntry::_deserialize(const Dictionary &p_json) {

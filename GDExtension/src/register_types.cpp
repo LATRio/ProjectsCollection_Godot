@@ -36,9 +36,9 @@ static void initialize_gdextension_types(const ModuleInitializationLevel p_level
 	GDREGISTER_CLASS(QS::QuestEntry);
 	GDREGISTER_CLASS(QS::QuestlineEntry);
 	{
-		ObjectSerializationRegistry::get_singleton()->register_class("QuestlineEntry");
-		ObjectSerializationRegistry::get_singleton()->register_class("QuestEntry");
-		ObjectSerializationRegistry::get_singleton()->register_class("QuestStepEntry");
+		ObjectSerializationRegistry::get_singleton()->register_class(QS::QuestlineEntry::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_class(QS::QuestEntry::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_class(QS::QuestStepEntry::get_class_static());
 	}
 }
 
