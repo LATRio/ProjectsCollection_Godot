@@ -39,9 +39,12 @@ TODO list:
 - More elegant way to connect moving platform's NavMesh to level's NavMesh. Maybe build invisible bridge for crossing over?
 
 ### Quest System [WIP]
+
+※ Currently being rewritten into C++ from GDScript.
+
 Implementation of a flexible, extensible advanced quest system.
 
-See [QuestSystem](TestProjects/QuestSystem/README.md) (Too long to fit here, also might be a bit outdated)
+See [QuestSystem](GDExtension/src/quest_system/README.md) (Too long to fit here, also might be a bit outdated)
 Also WIP editor that being worked on inside of `quest_editor_wip` branch.
 
 ---
@@ -62,26 +65,29 @@ The `CMakePresets.json` file provides both "Debug" and "Release" presets, with g
 
 ---
 
-## Debugging GDExtension C++ on Rider/Clion
+## Debugging GDExtension C++ on Rider
 To set up your debugging environment, follow these configurations (Assuming GDExtension folder was opened):
 
+(Clion doesn't support natvis.)
+
 ### Run/Debug Configurations:
-- **Executable:** 
+- **Executable:** # Full path to Godot's executable 
   ```plaintext
-  /bin/godot  # Full path to Godot's executable
+  /bin/godot
   ```
   
-- **Program Arguments:** 
+- **Program Arguments:** # Optional, use if working on editor plugins 
   ```plaintext
-  --editor  # Optional, use if working on editor plugins
+  --editor
   ```
 
-- **Working Directory:** 
+- **Working Directory:** # Path to the directory containing "project.godot" 
   ```plaintext
-  $SolutionDir$/../  # Path to the directory containing "project.godot"
+  $SolutionDir$/../
   ```
 
 ---
 
 ## Assets Used
+- [Universal Animation Library - Quaternius (CC0 1.0 Universal)](https://store.godotengine.org/asset/quaternius/universal-animation-library/) 
 - **TBA** (To Be Added)
