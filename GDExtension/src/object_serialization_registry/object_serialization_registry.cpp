@@ -10,7 +10,9 @@ void ObjectSerializationRegistry::_bind_methods() {
 void ObjectSerializationRegistry::register_class(const StringName &p_classname) {
 	ERR_FAIL_COND_MSG(!ClassDB::class_has_method(p_classname, "_get_type"), "[ObjectSerializationRegistry] Cannot find a static method '_get_type'. " + p_classname);
 	const auto type{ ClassDB::class_call_static(p_classname, "_get_type") };
+
 	UtilityFunctions::print("[ObjectSerializationRegistry] Registering. Type: " + static_cast<StringName>(type) + ", Class: " + p_classname);
+
 	ERR_FAIL_COND_MSG(m_registry.has(type), String("[ObjectSerializationRegistry] Registry already has type {0} registered. {1}").format(Array::make(type, p_classname)));
 	ERR_FAIL_COND_MSG(!ClassDB::class_has_method(p_classname, "_deserialize"), "[ObjectSerializationRegistry] Cannot find a static method '_deserialize'. " + p_classname);
 	const MethodBind *deserialize_method{ ClassDB::get_method(p_classname, "_deserialize") };
@@ -26,6 +28,6 @@ Ref<Resource> ObjectSerializationRegistry::deserialize_json(const Dictionary &p_
 	ERR_FAIL_COND_V_MSG(p_dict_json.is_empty(), nullptr, "[ObjectSerializationRegistry] Passed dict is empty!");
 	ERR_FAIL_COND_V_MSG(!p_dict_json.has("type"), nullptr, String("[ObjectSerializationRegistry] Cannot find object key 'type' in dictionary. JSON: {0}").format(Array::make(p_dict_json)));
 	ERR_FAIL_COND_V_MSG(!m_registry.has(p_dict_json["type"]), nullptr, String("[ObjectSerializationRegistry] '{0}' type isn't registered. JSON: {0}").format(Array::make(p_dict_json["type"])));
-	UtilityFunctions::printerr("Deserializing: " + m_registry[p_dict_json["type"]]);
+	//UtilityFunctions::printerr("Deserializing: " + m_registry[p_dict_json["type"]]);
 	return ClassDB::class_call_static(m_registry[p_dict_json["type"]], "_deserialize", p_dict_json);
 }

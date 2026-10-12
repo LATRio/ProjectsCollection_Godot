@@ -13,14 +13,14 @@ class QuestStepEntry final : public Entry {
 protected:
 	static void _bind_methods();
 
+	bool _set_status_impl(EntryStatus p_new_status) override;
+	StringName _get_previous_sibling_entry_id_impl() const override;
+	StringName _get_next_sibling_entry_id_impl() const override;
+
 public:
 	static String _get_type() {
 		return "step";
 	}
-
-	StringName get_previous_sibling_entry_id() const override { return ""; }
-
-	StringName get_next_sibling_entry_id() const override { return ""; }
 
 	static Ref<QuestStepEntry> _deserialize(const Dictionary &p_json);
 };

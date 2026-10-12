@@ -39,7 +39,7 @@ QuestSystem::QuestSystem() {
 
 void QuestSystem::load_database(const String &p_filepath) {
 	const Ref db_file{ FileAccess::open(p_filepath, FileAccess::READ) };
-	if (!db_file.is_valid()) {
+	if (db_file.is_null()) {
 		printerr(FileAccess::get_open_error(), "Failed to open database file {0}.", p_filepath);
 	}
 	Ref json{memnew(JSON)};
@@ -56,7 +56,7 @@ void QuestSystem::load_database(const String &p_filepath) {
 		for (const auto &questline_json : questlines) {
 			if (questline_json.get_type() == Variant::DICTIONARY) {
 				Ref<QuestlineEntry> entry{ ObjectSerializationRegistry::get_singleton()->deserialize_json(questline_json) };
-				if (!entry.is_valid()) {
+				if (entry.is_null()) {
 					printerr("Cannot add null entry! JSON: {0}", questline_json);
 					continue;
 				}
@@ -69,7 +69,7 @@ void QuestSystem::load_database(const String &p_filepath) {
 		for (const auto &quest_json : free_quests) {
 			if (quest_json.get_type() == Variant::DICTIONARY) {
 				Ref<QuestEntry> entry{ ObjectSerializationRegistry::get_singleton()->deserialize_json(quest_json) };
-				if (!entry.is_valid()) {
+				if (entry.is_null()) {
 					printerr("Cannot add null entry! JSON: {0}", quest_json);
 					continue;
 				}

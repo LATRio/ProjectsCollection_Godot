@@ -6,13 +6,25 @@ namespace QS {
 
 void Entry::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("entry_updated"));
+
+	// Overridable functions
+	ClassDB::bind_method(D_METHOD("set_status", "new_status"), &Entry::set_status);
+	ClassDB::bind_method(D_METHOD("get_previous_sibling_entry_id"), &Entry::get_previous_sibling_entry_id);
+	ClassDB::bind_method(D_METHOD("get_next_sibling_entry_id"), &Entry::get_next_sibling_entry_id);
+	ClassDB::bind_method(D_METHOD("get_child_entry_ids"), &Entry::get_child_entry_ids);
+
+	ClassDB::bind_static_method(get_class_static(), D_METHOD("deserialize_json", "entry", "dict_json"), &Entry::deserialize_json);
+
+	// Virtual method slots in GDScript/C#. For example: when calling actual 'set_status',
+	// it will call '_set_status' that was "overriden" by GDScript/C# or '_set_status_impl'
+	// that was overriden by derived C++ classes.
+	GDVIRTUAL_BIND(_set_status, "new_status");
+	GDVIRTUAL_BIND(_get_previous_sibling_entry_id);
+	GDVIRTUAL_BIND(_get_next_sibling_entry_id);
+	GDVIRTUAL_BIND(_get_child_entry_ids);
 }
 
-StringName Entry::get_id() const {
-	return m_id;
-}
-
-bool Entry::set_status(const EntryStatus p_new_status) {
+bool Entry::base_set_status(const EntryStatus p_new_status) {
 	ERR_FAIL_COND_V(m_status == p_new_status, false);
 	QuestSystem::get_singleton()->sort_entry_by_status(m_id, m_status, p_new_status);
 	m_status = p_new_status;
@@ -65,32 +77,70 @@ bool Entry::set_status(const EntryStatus p_new_status) {
 	return true;
 }
 
+StringName Entry::_get_previous_sibling_entry_id_impl() const {
+	QuestSystem::printerr("{0} [{1}] didn't implement 'get_previous_sibling_entry_id'.", get_class_static(), m_id);
+	return "";
+}
+
+StringName Entry::_get_next_sibling_entry_id_impl() const {
+	QuestSystem::printerr("{0} [{1}] didn't implement 'get_next_sibling_entry_id'.", get_class_static(), m_id);
+	return "";
+}
+
+TypedArray<StringName> Entry::_get_child_entry_ids_impl() const {
+	QuestSystem::printerr("{0} [{1}] either doesn't support child entries or didn't implement 'get_child_entry_ids'.", get_class_static(), m_id);
+	return TypedArray<StringName>();
+}
+
+StringName Entry::get_id() const {
+	return m_id;
+}
+
+bool Entry::set_status(EntryStatus p_new_status) {
+	if (base_set_status(p_new_status)) {
+		bool ret{};
+		// If overriden in GDScript/C#
+		if (!GDVIRTUAL_CALL(_set_status, static_cast<uint32_t>(p_new_status), ret)) {
+			return ret;
+		}
+		// If overriden in C++. Returns true if not overriden.
+		return _set_status_impl(p_new_status);
+	}
+	return false;
+}
+
 StringName Entry::get_previous_sibling_entry_id() const {
-	StringName ret;
-	if (GDVIRTUAL_CALL(get_previous_sibling_entry_id, ret)) {
-		return ret;
+	if (!m_parent_id.is_empty()) { // Not point in continuing if there is no parent
+		StringName ret;
+		if (GDVIRTUAL_CALL(_get_previous_sibling_entry_id, ret)) {
+			return ret;
+		}
+		return _get_previous_sibling_entry_id_impl();
 	}
 	return "";
 }
 
 StringName Entry::get_next_sibling_entry_id() const {
-	StringName ret;
-	if (GDVIRTUAL_CALL(get_next_sibling_entry_id, ret)) {
-		return ret;
+	if (!m_parent_id.is_empty()) { // Not point in continuing if there is no parent
+		StringName ret;
+		if (GDVIRTUAL_CALL(_get_next_sibling_entry_id, ret)) {
+			return ret;
+		}
+		return _get_next_sibling_entry_id_impl();
 	}
 	return "";
 }
 
 TypedArray<StringName> Entry::get_child_entry_ids() const {
 	TypedArray<StringName> ret;
-	if (GDVIRTUAL_CALL(get_child_entry_ids, ret)) {
+	if (GDVIRTUAL_CALL(_get_child_entry_ids, ret)) {
 		return ret;
 	}
-	return TypedArray<StringName>();
+	return _get_child_entry_ids_impl();
 }
 
 bool Entry::evaluate_availability() {
-	if (!m_availability_condition.is_valid() || m_availability_condition->evaluate()) {
+	if (m_availability_condition.is_null() || m_availability_condition->evaluate()) {
 		set_status(EntryStatus::AVAILABLE);
 		return true;
 	}
@@ -98,7 +148,7 @@ bool Entry::evaluate_availability() {
 }
 
 bool Entry::evaluate_activation() {
-	if (!m_activation_condition.is_valid() || m_activation_condition->evaluate()) {
+	if (m_activation_condition.is_null() || m_activation_condition->evaluate()) {
 		set_status(EntryStatus::INPROGRESS);
 		return true;
 	}
@@ -106,7 +156,7 @@ bool Entry::evaluate_activation() {
 }
 
 bool Entry::evaluate_completion() {
-	if (!m_completion_condition.is_valid() || m_completion_condition->evaluate()) {
+	if (m_completion_condition.is_null() || m_completion_condition->evaluate()) {
 		set_status(EntryStatus::COMPLETED);
 		return true;
 	}
@@ -114,7 +164,7 @@ bool Entry::evaluate_completion() {
 }
 
 bool Entry::evaluate_failure() {
-	if (!m_failure_condition.is_valid() || m_failure_condition->evaluate()) {
+	if (m_failure_condition.is_null() || m_failure_condition->evaluate()) {
 		set_status(EntryStatus::FAILED);
 		return true;
 	}
@@ -135,23 +185,24 @@ void Entry::refresh_entry() {
 			evaluate_completion();
 			break;
 		}
-			// TODO: Mark uncompleted child entries as skipped
+		// TODO: Mark uncompleted child entries as skipped
 		default:
 			break;
 	}
 }
 
-void Entry::refresh_child_entries() {
-	for (const auto& child_id : get_child_entry_ids()) {
-		Ref child{QuestSystem::get_singleton()->get_entry(child_id)};
+void Entry::refresh_child_entries() const {
+	for (const auto &child_id : get_child_entry_ids()) {
+		Ref child{ QuestSystem::get_singleton()->get_entry(child_id) };
 		if (child.is_valid()) {
 			child->refresh_entry();
 		}
 	}
 }
 
-void Entry::_deserialize(const Ref<Entry> &p_entry, const Dictionary &p_json) {
-	ERR_FAIL_COND_MSG(!p_json.has("id"), "[Entry::deserialize] Failed to find 'id' key.");
+void Entry::deserialize_json(const Ref<Entry> &p_entry, const Dictionary &p_json) {
+	ERR_FAIL_NULL_MSG(p_entry, "[Entry::deserialize_json] 'p_entry' is null.");
+	ERR_FAIL_COND_MSG(!p_json.has("id"), "[Entry::deserialize_json] Failed to find 'id' key.");
 	p_entry->m_id = p_json["id"];
 
 	if (p_json.has("availability_condition")) {
