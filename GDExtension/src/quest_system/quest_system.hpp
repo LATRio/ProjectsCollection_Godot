@@ -6,26 +6,17 @@
 
 using namespace godot;
 
-enum class EntryStatus : uint32_t {
-	UNKNOWN = 0,
-	AVAILABLE,
-	INPROGRESS,
-	COMPLETED,
-	CANCELLED,
-	FAILED,
-	LOCKED,
-	SKIPPED,
-	ERROR,
-	MAX_COUNT,
-};
-
-VARIANT_ENUM_CAST(EntryStatus);
-
-struct HashMapHasherEntryStatus {
-	static _FORCE_INLINE_ uint32_t hash(const EntryStatus p_enum) {
-		using UnderlyingType = std::underlying_type_t<EntryStatus>;
-		return hash_fmix32(static_cast<UnderlyingType>(p_enum));
-	}
+enum EntryStatus {
+	ENTRY_STATUS_UNKNOWN = 0,
+	ENTRY_STATUS_AVAILABLE,
+	ENTRY_STATUS_INPROGRESS,
+	ENTRY_STATUS_COMPLETED,
+	ENTRY_STATUS_CANCELLED,
+	ENTRY_STATUS_FAILED,
+	ENTRY_STATUS_LOCKED,
+	ENTRY_STATUS_SKIPPED,
+	ENTRY_STATUS_ERROR,
+	ENTRY_STATUS_MAX_COUNT,
 };
 
 namespace QS {
@@ -41,23 +32,23 @@ class QuestSystem final : public Object {
 public:
 	static String status_to_string(const EntryStatus p_status) {
 		switch (p_status) {
-			case EntryStatus::UNKNOWN:
+			case ENTRY_STATUS_UNKNOWN:
 				return "UNKNOWN";
-			case EntryStatus::AVAILABLE:
+			case ENTRY_STATUS_AVAILABLE:
 				return "AVAILABLE";
-			case EntryStatus::INPROGRESS:
+			case ENTRY_STATUS_INPROGRESS:
 				return "INPROGRESS";
-			case EntryStatus::COMPLETED:
+			case ENTRY_STATUS_COMPLETED:
 				return "COMPLETED";
-			case EntryStatus::CANCELLED:
+			case ENTRY_STATUS_CANCELLED:
 				return "CANCELLED";
-			case EntryStatus::FAILED:
+			case ENTRY_STATUS_FAILED:
 				return "FAILED";
-			case EntryStatus::LOCKED:
+			case ENTRY_STATUS_LOCKED:
 				return "LOCKED";
-			case EntryStatus::SKIPPED:
+			case ENTRY_STATUS_SKIPPED:
 				return "SKIPPED";
-			case EntryStatus::ERROR:
+			case ENTRY_STATUS_ERROR:
 				return "ERROR";
 			default:
 				return "-1";
@@ -65,20 +56,21 @@ public:
 	}
 
 private:
+	QuestSystem();
+
 	HashMap<StringName, Ref<Entry>> m_entries;
 	TypedArray<StringName> m_questlines;
 	TypedArray<StringName> m_quests;
 	TypedArray<StringName> m_free_quests;
 	TypedArray<StringName> m_queststeps;
-	HashMap<EntryStatus, TypedArray<StringName>, HashMapHasherEntryStatus> m_all_entries_by_status;
+	HashMap<EntryStatus, TypedArray<StringName>> m_all_entries_by_status;
 
 protected:
 	static void _bind_methods();
 
 public:
-	QuestSystem();
-
 	void load_database(const String &p_filepath);
+	void clear_database();
 	void refresh_entry(const StringName &p_id);
 
 	[[nodiscard]] bool entry_exists(const StringName &p_id) const;
@@ -106,7 +98,9 @@ public:
 	[[nodiscard]] bool is_queststep_id(const StringName& p_id) const;
 
 	void set_entry_status(const StringName& p_id, EntryStatus p_status);
+	void _set_entry_status(const StringName& p_id, uint32_t p_status);
 	[[nodiscard]] EntryStatus get_entry_status(const StringName& p_id) const;
+	[[nodiscard]] uint32_t _get_entry_status(const StringName& p_id) const;
 
 	void sort_entry_by_status(const StringName& p_id, EntryStatus p_old_status, EntryStatus p_new_status);
 
@@ -129,3 +123,5 @@ void QuestSystem::printerr(const Error p_error, const String &p_arg, const Args 
 }
 
 } //namespace QS
+
+VARIANT_ENUM_CAST(EntryStatus);

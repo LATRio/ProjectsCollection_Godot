@@ -12,10 +12,10 @@ void QuestlineEntry::_bind_methods() {
 }
 
 bool QuestlineEntry::_set_status_impl(const EntryStatus p_new_status) {
-	if (p_new_status >= EntryStatus::COMPLETED) {
+	if (p_new_status >= ENTRY_STATUS_COMPLETED) {
 		for (const auto& quest_id : m_quests) {
-			if (QuestSystem::get_singleton()->get_entry_status(quest_id) < EntryStatus::COMPLETED) {
-				QuestSystem::get_singleton()->set_entry_status(quest_id, EntryStatus::SKIPPED);
+			if (QuestSystem::get_singleton()->get_entry_status(quest_id) < ENTRY_STATUS_COMPLETED) {
+				QuestSystem::get_singleton()->set_entry_status(quest_id, ENTRY_STATUS_SKIPPED);
 			}
 		}
 	}
@@ -25,7 +25,7 @@ bool QuestlineEntry::_set_status_impl(const EntryStatus p_new_status) {
 Ref<QuestlineEntry> QuestlineEntry::_deserialize(const Dictionary &p_json) {
 	ERR_FAIL_COND_V_MSG(!p_json.has("quests"), nullptr, "[QuestlineEntry::deserialize] Failed to find 'quests' key.");
 	ERR_FAIL_COND_V_MSG(p_json["quests"].get_type() != Variant::ARRAY, nullptr, "[QuestlineEntry::deserialize] 'quests' is not an array.");
-	Ref entry{memnew(QuestlineEntry)};
+	Ref entry = memnew(QuestlineEntry);
 
 	deserialize_json(entry, p_json);
 

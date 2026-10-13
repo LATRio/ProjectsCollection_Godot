@@ -1,9 +1,8 @@
 #pragma once
 #include "entry.hpp"
+#include "objectives/objective.hpp"
 
 namespace QS {
-
-class Objective;
 
 class QuestStepEntry final : public Entry {
 	GDCLASS(QuestStepEntry, Entry);
@@ -22,7 +21,12 @@ public:
 		return "step";
 	}
 
+	void set_objective(const Ref<Objective> &p_objective) {
+		m_objective = p_objective;
+	}
+
+	Ref<Objective> get_objective() const { return m_objective; }
+
 	static Ref<QuestStepEntry> _deserialize(const Dictionary &p_json);
 };
-
 }

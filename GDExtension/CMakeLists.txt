@@ -6,7 +6,7 @@ if(CMAKE_C_COMPILER)
 endif()
 
 set(LIBNAME "ProjectCollectionLib") # "The name of the library"
-set(GODOT_PROJECT_DIR "../" CACHE STRING "The directory of a Godot project folder")
+set(GODOT_PROJECT_DIR "/.." CACHE STRING "The directory of a Godot project folder")
 
 # Make sure all the dependencies are satisfied
 find_package(Python3 3.4 REQUIRED)
@@ -99,6 +99,8 @@ set_target_properties(${LIBNAME}
 )
 
 set(GODOT_PROJECT_BINARY_DIR "${PROJECT_SOURCE_DIR}/${GODOT_PROJECT_DIR}/bin/${GODOTCPP_PLATFORM}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GODOT_PROJECT_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GODOT_PROJECT_BINARY_DIR})
 
 add_custom_command(TARGET ${LIBNAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:${LIBNAME}>" "${GODOT_PROJECT_BINARY_DIR}/$<TARGET_FILE_NAME:${LIBNAME}>"

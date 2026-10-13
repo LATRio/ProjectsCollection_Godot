@@ -13,13 +13,13 @@ func _ready() -> void:
 		questline_item.set_text(0, "Questline: " + questline.id)
 		questline_item.set_text(1, QuestSystem.status_to_string(questline.get_status()))
 		questline.entry_updated.connect(update_entry_item.bind(questline_item, questline.id))
-		for quest_id in questline.quests:
+		for quest_id in questline.get_child_entry_ids():
 			var quest := QuestSystem.get_quest(quest_id)
 			var quest_item := create_item(questline_item)
 			quest_item.set_text(0, "Quest: " + quest.id)
 			quest_item.set_text(1, QuestSystem.status_to_string(quest.get_status()))
 			quest.entry_updated.connect(update_entry_item.bind(quest_item, quest.id))
-			for queststep_id in quest.steps:
+			for queststep_id in quest.get_child_entry_ids():
 				var queststep := QuestSystem.get_queststep(queststep_id)
 				var queststep_item := create_item(quest_item)
 				queststep_item.set_text(0, "Queststep: " + queststep.id)
@@ -33,7 +33,7 @@ func _ready() -> void:
 		quest_item.set_text(0, "Quest: " + quest.id)
 		quest_item.set_text(1, QuestSystem.status_to_string(quest.get_status()))
 		quest.entry_updated.connect(update_entry_item.bind(quest_item, quest.id))
-		for queststep_id in quest.steps:
+		for queststep_id in quest.get_child_entry_ids():
 			var queststep := QuestSystem.get_queststep(queststep_id)
 			var queststep_item := create_item(quest_item)
 			queststep_item.set_text(0, "Queststep: " + queststep.id)

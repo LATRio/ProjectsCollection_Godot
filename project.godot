@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 EventBus="*uid://bc6ryjbfk5efg"
+QuestSystemInit="*uid://12mcf18sbi8f"
 
 [display]
 

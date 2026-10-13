@@ -9,22 +9,27 @@ namespace QS {
 void QuestStepEntry::_bind_methods() {
 	ClassDB::bind_static_method(get_class_static(), D_METHOD("_get_type"), &QuestStepEntry::_get_type);
 	ClassDB::bind_static_method(get_class_static(), D_METHOD("_deserialize", "p_json"), &QuestStepEntry::_deserialize);
+
+	ClassDB::bind_method(D_METHOD("set_objective", "objective"), &QuestStepEntry::set_objective);
+	ClassDB::bind_method(D_METHOD("get_objective"), &QuestStepEntry::get_objective);
+
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "objective"), "set_objective", "get_objective");
 }
 
 bool QuestStepEntry::_set_status_impl(const EntryStatus p_new_status) {
-	if (p_new_status == EntryStatus::INPROGRESS) {
+	if (p_new_status == ENTRY_STATUS_INPROGRESS) {
 		m_objective->register_tracker();
-	} else if (p_new_status == EntryStatus::COMPLETED) {
+	} else if (p_new_status == ENTRY_STATUS_COMPLETED) {
 		m_objective->unregister_tracker();
 	}
 	return true;
 }
 
 StringName QuestStepEntry::_get_previous_sibling_entry_id_impl() const {
-	Ref quest{ QuestSystem::get_singleton()->get_quest(m_parent_id) };
+	Ref quest = QuestSystem::get_singleton()->get_quest(m_parent_id);
 	ERR_FAIL_COND_V_MSG(quest.is_null(), "", String("Failed to retrieve a parent QuestEntry [{0}].").format(Array::make(m_parent_id)));
 
-	auto steps{ quest->get_child_entry_ids() };
+	auto steps = quest->get_child_entry_ids();
 	if (steps.size() < 2) { return ""; }
 	for (int i = 1; i < steps.size(); ++i) {
 		if (steps[i] == m_id) {
@@ -35,10 +40,10 @@ StringName QuestStepEntry::_get_previous_sibling_entry_id_impl() const {
 }
 
 StringName QuestStepEntry::_get_next_sibling_entry_id_impl() const {
-	Ref quest{ QuestSystem::get_singleton()->get_quest(m_parent_id) };
+	Ref quest = QuestSystem::get_singleton()->get_quest(m_parent_id);
 	ERR_FAIL_COND_V_MSG(quest.is_null(), "", String("Failed to retrieve a parent QuestEntry [{0}].").format(Array::make(m_parent_id)));
 
-	auto steps{ quest->get_child_entry_ids() };
+	auto steps = quest->get_child_entry_ids();
 	if (steps.size() < 2) { return ""; }
 	for (int i = 0; i < steps.size() - 1; ++i) {
 		if (steps[i] == m_id) {

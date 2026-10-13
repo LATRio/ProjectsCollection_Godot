@@ -28,17 +28,17 @@ static void initialize_gdextension_types(const ModuleInitializationLevel p_level
 	ObjectSerializationRegistry::create_singleton();
 	Engine::get_singleton()->register_singleton("QuestSystem", QS::QuestSystem::get_singleton());
 	Engine::get_singleton()->register_singleton("ObjectSerializationRegistry", ObjectSerializationRegistry::get_singleton());
-	GDREGISTER_ABSTRACT_CLASS(QS::Condition);
-	GDREGISTER_ABSTRACT_CLASS(QS::Action);
-	GDREGISTER_ABSTRACT_CLASS(QS::Objective);
+	GDREGISTER_CLASS(QS::Condition);
+	GDREGISTER_CLASS(QS::Action);
+	GDREGISTER_CLASS(QS::Objective);
 	GDREGISTER_ABSTRACT_CLASS(QS::Entry);
 	GDREGISTER_CLASS(QS::QuestStepEntry);
 	GDREGISTER_CLASS(QS::QuestEntry);
 	GDREGISTER_CLASS(QS::QuestlineEntry);
 	{
-		ObjectSerializationRegistry::get_singleton()->register_class(QS::QuestlineEntry::get_class_static());
-		ObjectSerializationRegistry::get_singleton()->register_class(QS::QuestEntry::get_class_static());
-		ObjectSerializationRegistry::get_singleton()->register_class(QS::QuestStepEntry::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestlineEntry::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestEntry::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestStepEntry::get_class_static());
 	}
 }
 

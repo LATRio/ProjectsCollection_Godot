@@ -10,6 +10,7 @@ namespace QS {
 
 class Objective : public Resource {
 	GDCLASS(Objective, Resource)
+
 	StringName m_parent_step_id;
 	bool m_is_completed{};
 	bool m_is_failed{};
@@ -27,6 +28,10 @@ protected:
 		ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "is_completed"), "set_is_completed", "get_is_completed");
 		ADD_PROPERTY(PropertyInfo(Variant::STRING_NAME, "is_failed"), "set_is_failed", "get_is_failed");
 
+		ClassDB::bind_method(D_METHOD("register_tracker"), &Objective::register_tracker);
+		ClassDB::bind_method(D_METHOD("unregister_tracker"), &Objective::unregister_tracker);
+		ClassDB::bind_method(D_METHOD("on_objective_updated", "args"), &Objective::on_objective_updated);
+
 		ClassDB::bind_method(D_METHOD("_on_objective_completed"), &Objective::_on_objective_completed);
 		ClassDB::bind_method(D_METHOD("_on_objective_failed"), &Objective::_on_objective_failed);
 
@@ -42,6 +47,18 @@ protected:
 	}
 
 	virtual void _on_objective_updated_impl(const Variant &p_args) {
+	}
+
+	void _on_objective_completed() {
+		ERR_FAIL_COND_MSG(m_is_failed, String("Current objective of the QuestStep [{0}] is already failed!").format(Array::make(m_parent_step_id)));
+		m_is_completed = true;
+		QuestSystem::get_singleton()->refresh_entry(m_parent_step_id);
+	}
+
+	void _on_objective_failed() {
+		ERR_FAIL_COND_MSG(m_is_completed, String("Current objective of the QuestStep [{0}] is already completed!").format(Array::make(m_parent_step_id)));
+		m_is_failed = true;
+		QuestSystem::get_singleton()->refresh_entry(m_parent_step_id);
 	}
 
 public:
@@ -90,18 +107,6 @@ public:
 	GDVIRTUAL0(_register_tracker)
 	GDVIRTUAL0(_unregister_tracker)
 	GDVIRTUAL1(_on_objective_updated, Variant)
-
-	void _on_objective_completed() {
-		ERR_FAIL_COND_MSG(m_is_failed, String("Current objective of the QuestStep [{0}] is already failed!").format(Array::make(m_parent_step_id)));
-		m_is_completed = true;
-		QuestSystem::get_singleton()->refresh_entry(m_parent_step_id);
-	}
-
-	void _on_objective_failed() {
-		ERR_FAIL_COND_MSG(m_is_completed, String("Current objective of the QuestStep [{0}] is already completed!").format(Array::make(m_parent_step_id)));
-		m_is_failed = true;
-		QuestSystem::get_singleton()->refresh_entry(m_parent_step_id);
-	}
 };
 
 } //namespace QS

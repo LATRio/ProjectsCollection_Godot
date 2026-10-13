@@ -11,10 +11,10 @@ void QS::QuestEntry::_bind_methods() {
 }
 
 bool QS::QuestEntry::_set_status_impl(const EntryStatus p_new_status) {
-	if (p_new_status >= EntryStatus::COMPLETED) {
+	if (p_new_status >= ENTRY_STATUS_COMPLETED) {
 		for (const auto& step_id : m_steps) {
-			if (QuestSystem::get_singleton()->get_entry_status(step_id) < EntryStatus::COMPLETED) {
-				QuestSystem::get_singleton()->set_entry_status(step_id, EntryStatus::SKIPPED);
+			if (QuestSystem::get_singleton()->get_entry_status(step_id) < ENTRY_STATUS_COMPLETED) {
+				QuestSystem::get_singleton()->set_entry_status(step_id, ENTRY_STATUS_SKIPPED);
 			}
 		}
 	}
@@ -22,10 +22,10 @@ bool QS::QuestEntry::_set_status_impl(const EntryStatus p_new_status) {
 }
 
 StringName QS::QuestEntry::_get_previous_sibling_entry_id_impl() const {
-	Ref questline{ QuestSystem::get_singleton()->get_questline(m_parent_id) };
+	Ref questline = QuestSystem::get_singleton()->get_questline(m_parent_id);
 	ERR_FAIL_COND_V_MSG(questline.is_null(), "", String("Failed to retrieve a parent QuestlineEntry [{0}].").format(Array::make(m_parent_id)));
 
-	auto quests{ questline->get_child_entry_ids() };
+	auto quests = questline->get_child_entry_ids();
 	if (quests.size() < 2) { return ""; }
 	for (int i = 1; i < quests.size(); ++i) {
 		if (quests[i] == m_id) {
@@ -36,10 +36,10 @@ StringName QS::QuestEntry::_get_previous_sibling_entry_id_impl() const {
 }
 
 StringName QS::QuestEntry::_get_next_sibling_entry_id_impl() const {
-	Ref questline{ QuestSystem::get_singleton()->get_questline(m_parent_id) };
+	Ref questline = QuestSystem::get_singleton()->get_questline(m_parent_id);
 	ERR_FAIL_COND_V_MSG(questline.is_null(), "", String("Failed to retrieve a parent QuestlineEntry [{0}].").format(Array::make(m_parent_id)));
 
-	auto quests{ questline->get_child_entry_ids() };
+	auto quests = questline->get_child_entry_ids();
 	if (quests.size() < 2) { return ""; }
 	for (int i = 0; i < quests.size() - 1; ++i) {
 		if (quests[i] == m_id) {
@@ -66,7 +66,7 @@ Ref<QS::QuestEntry> QS::QuestEntry::_deserialize(const Dictionary &p_json) {
 			QuestSystem::printerr("Quest ID [{0}] must only contain dictionary values in 'steps'!", entry->m_id);
 			return nullptr;
 		}
-		Ref<QuestStepEntry> step_obj{ ObjectSerializationRegistry::get_singleton()->deserialize_json(step_json) };
+		Ref<QuestStepEntry> step_obj = ObjectSerializationRegistry::get_singleton()->deserialize_json(step_json);
 		if (step_obj.is_null()) {
 			QuestSystem::printerr("Dictionary in 'steps' of Quest ID [{0}] is invalid.", entry->m_id);
 			return nullptr;
