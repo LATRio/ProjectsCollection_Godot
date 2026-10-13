@@ -15,7 +15,7 @@ func _unregister_tracker() -> void:
 
 func _on_objective_updated(args: Variant) -> void:
 	if typeof(args) == TYPE_FLOAT and args > 0.0:
-		super._on_objective_completed()
+		_on_objective_completed()
 
 
 static func _deserialize(_json: Dictionary) -> DamagePlayer_Objective:

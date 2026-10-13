@@ -12,6 +12,7 @@ void QuestlineEntry::_bind_methods() {
 }
 
 bool QuestlineEntry::_set_status_impl(const EntryStatus p_new_status) {
+	//UtilityFunctions::print("QuestlineEntry::_set_status_impl: ", QuestSystem::status_to_string(p_new_status));
 	if (p_new_status >= ENTRY_STATUS_COMPLETED) {
 		for (const auto& quest_id : m_quests) {
 			if (QuestSystem::get_singleton()->get_entry_status(quest_id) < ENTRY_STATUS_COMPLETED) {

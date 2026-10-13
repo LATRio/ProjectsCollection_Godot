@@ -17,6 +17,7 @@ void QuestStepEntry::_bind_methods() {
 }
 
 bool QuestStepEntry::_set_status_impl(const EntryStatus p_new_status) {
+	//UtilityFunctions::print("QuestStepEntry::_set_status_impl: ", QuestSystem::status_to_string(p_new_status));
 	if (p_new_status == ENTRY_STATUS_INPROGRESS) {
 		m_objective->register_tracker();
 	} else if (p_new_status == ENTRY_STATUS_COMPLETED) {

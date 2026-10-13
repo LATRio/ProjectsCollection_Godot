@@ -30,6 +30,7 @@ void Entry::_bind_methods() {
 
 bool Entry::base_set_status(const EntryStatus p_new_status) {
 	// Skip if status is actually unchanged
+	// UtilityFunctions::print("Entry::base_set_status: ", QuestSystem::status_to_string(p_new_status));
 	ERR_FAIL_COND_V_MSG(m_status == p_new_status, false, String("[QuestSystem] Trying to set the same status '{0}' to Entry ID [{1}]").format(Array::make(p_new_status, get_id())));
 	QuestSystem::get_singleton()->sort_entry_by_status(m_id, m_status, p_new_status);
 	m_status = p_new_status;
@@ -58,7 +59,7 @@ bool Entry::base_set_status(const EntryStatus p_new_status) {
 					action->execute();
 				}
 			}
-			if (m_parent_id.is_empty()) {
+			if (!m_parent_id.is_empty()) {
 				QuestSystem::get_singleton()->get_entry(m_parent_id)->refresh_entry();
 			}
 			break;
@@ -69,7 +70,7 @@ bool Entry::base_set_status(const EntryStatus p_new_status) {
 					action->execute();
 				}
 			}
-			if (m_parent_id.is_empty()) {
+			if (!m_parent_id.is_empty()) {
 				QuestSystem::get_singleton()->get_entry(m_parent_id)->refresh_entry();
 			}
 			break;
@@ -78,7 +79,7 @@ bool Entry::base_set_status(const EntryStatus p_new_status) {
 			break;
 	}
 
-	emit_signal("entry_update");
+	emit_signal("entry_updated");
 	return true;
 }
 
@@ -100,7 +101,7 @@ bool Entry::set_status(EntryStatus p_new_status) {
 	if (base_set_status(p_new_status)) {
 		bool ret{};
 		// If overriden in GDScript/C#
-		if (!GDVIRTUAL_CALL(_set_status, p_new_status, ret)) {
+		if (GDVIRTUAL_CALL(_set_status, p_new_status, ret)) {
 			return ret;
 		}
 		// If overriden in C++. Returns true if not overriden.
