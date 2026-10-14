@@ -11,9 +11,9 @@ namespace QS {
 class Condition : public Resource {
 	GDCLASS(Condition, Resource)
 
+protected:
 	StringName m_caller_id;
 
-protected:
 	static void _bind_methods() {
 		ClassDB::bind_method(D_METHOD("set_caller_id", "called_id"), &Condition::set_caller_id);
 		ClassDB::bind_method(D_METHOD("get_caller_id"), &Condition::get_caller_id);

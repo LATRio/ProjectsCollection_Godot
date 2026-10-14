@@ -67,6 +67,10 @@ add_library(${LIBNAME} SHARED
         src/quest_system/actions/action.hpp
         src/object_serialization_registry/object_serialization_registry.cpp
         src/object_serialization_registry/object_serialization_registry.hpp
+        src/quest_system/conditions/allchildentriescompleted_condition.cpp
+        src/quest_system/conditions/allchildentriescompleted_condition.hpp
+        src/quest_system/conditions/anychildentryfailed_condition.cpp
+        src/quest_system/conditions/anychildentryfailed_condition.hpp
 )
 
 target_include_directories(${LIBNAME} PRIVATE

@@ -7,8 +7,6 @@ func _ready() -> void:
 	
 	ObjectSerializationRegistry.register_classname("PlayerDamaged_Condition")
 	
-	ObjectSerializationRegistry.register_classname("AllChildEntriesComplete_Condition")
-	ObjectSerializationRegistry.register_classname("AnyChildEntryFailed_Condition")
 	ObjectSerializationRegistry.register_classname("Comparison_Condition")
 	ObjectSerializationRegistry.register_classname("False_Condition")
 	ObjectSerializationRegistry.register_classname("Logical_Condition")

@@ -3,6 +3,7 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
+#include <godot_cpp/classes/engine.hpp>
 
 #include "actions/action.hpp"
 #include "conditions/condition.hpp"
@@ -12,8 +13,8 @@
 #include "object_serialization_registry/object_serialization_registry.hpp"
 #include "objectives/objective.hpp"
 #include "quest_system.hpp"
-
-#include <godot_cpp/classes/engine.hpp>
+#include "conditions/allchildentriescompleted_condition.hpp"
+#include "conditions/anychildentryfailed_condition.hpp"
 
 using namespace godot;
 
@@ -35,10 +36,14 @@ static void initialize_gdextension_types(const ModuleInitializationLevel p_level
 	GDREGISTER_CLASS(QS::QuestStepEntry);
 	GDREGISTER_CLASS(QS::QuestEntry);
 	GDREGISTER_CLASS(QS::QuestlineEntry);
+	GDREGISTER_CLASS(QS::AllChildEntriesCompleted_Condition);
+	GDREGISTER_CLASS(QS::AnyChildEntryFailed_Condition);
 	{
 		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestlineEntry::get_class_static());
 		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestEntry::get_class_static());
 		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestStepEntry::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::AllChildEntriesCompleted_Condition::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::AnyChildEntryFailed_Condition::get_class_static());
 	}
 }
 

@@ -25,7 +25,7 @@ void ObjectSerializationRegistry::register_classname(const StringName &p_classna
 	// Is it GDScript/C# class?
 	auto gclasses = ProjectSettings::get_singleton()->get_global_class_list();
 	ERR_FAIL_COND_MSG(gclasses.size() == 0, "[ObjectSerializationRegistry] There are no global classes.");
-	for (const auto& gclass : gclasses) {
+	for (const auto &gclass : gclasses) {
 		Dictionary class_dict = gclass;
 		if (class_dict["class"] == p_classname) {
 			Ref<Script> script = ResourceLoader::get_singleton()->load(class_dict["path"]);
@@ -63,8 +63,8 @@ void ObjectSerializationRegistry::register_class(const StringName &p_classname) 
 }
 
 void ObjectSerializationRegistry::register_script(const Ref<Script> &p_script) {
-	bool static_method__get_type_found{p_script->has_script_method("_get_type")};
-	bool static_method__deserialize_found{p_script->has_script_method("_deserialize")};
+	bool static_method__get_type_found{ p_script->has_script_method("_get_type") };
+	bool static_method__deserialize_found{ p_script->has_script_method("_deserialize") };
 	// auto methods = p_script->get_method_list();
 	// for (const auto &method : methods) {
 	// 	Dictionary method_dict = method;
@@ -112,8 +112,8 @@ Ref<Resource> ObjectSerializationRegistry::get_class_res(const StringName &p_cla
 		return m_script_registry[p_classname]->call("new");
 	}
 	if (m_registry.has(p_classname)) {
-		return ClassDB::instantiate(p_classname);
+		return ClassDB::instantiate(m_registry[p_classname]);
 	}
-	UtilityFunctions::printerr("[ObjectSerializationRegistry] Failed to find '{0}' class.", p_classname);
+	UtilityFunctions::printerr(String("[ObjectSerializationRegistry] Failed to find '{0}' class.").format(Array::make(p_classname)));
 	return nullptr;
 }

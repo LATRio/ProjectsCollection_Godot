@@ -15,13 +15,19 @@
 
 ---
 
-GDExtension implementation of feature-rich advanced quest system.
-
-※ Currently being rewritten into C++ from GDScript.
+C++ GDExtension implementation of feature-rich advanced quest system.
 
 TODO:
 - How to handle repeatable quests? Some condition on when it becomes available again?
 - Implement integration with save/load system.
+- Add categories to the questlines/quests (Main quest, Size quest, etc.).
+  - I guess, questline can be used as a category. But this feels like a workaround. Or maybe...
+- Add more built-in features to each entry to avoid using conditions(and maybe even actions/objectives) for everything:
+  - `blocking_entries` - almost all entries need this feature, so might as well add it.
+    - Probably will affect availability only, because almost all available quests can be accepted.
+    - Works alongside with `availability_condition`.
+  - `title`, `description` - basic display info about entries. Almost all of them need these.
+    - `description` might change based on progress. Might need to consider this.
 
 ---
 
@@ -115,14 +121,19 @@ Individual step of the Quest. Contains only one Objective.
 
 ## Others
 
+### ObjectSerializationRegistry
+
 ObjectSerializationRegistry was created to assist with deserialization of Actions', Conditions', Objectives' and Entries' JSON data.
 
 ### Actions
 [Actions folder](./actions)
 
-TODO: Separate into its own system.
-
 Build-in actions or custom. Perform described action upon execution.
+- TODO:
+  - Add actions that do the following:
+    - Cancel a Questline, Quest or QuestStep. Player refused to complete it, but it's not a failure either.
+    - Complete a Questline, Quest or QuestStep. Useful if there were many ways to complete quest or questline.
+    - Lock a Questline, Quest or QuestStep. Useful if conflicting quest was completed/chosen.
 
 Types of actions:
 - QuestSystem specific:
@@ -130,17 +141,17 @@ Types of actions:
 	- Properties:
 	  - `entry_id` - ID of the entry.
 	  - `new_status` - new status of the given entry.
-- TODO:
-  - Cancel a Questline, Quest or QuestStep. Player refused to complete it, but it's not a failure either.
-  - Complete a Questline, Quest or QuestStep. Useful if there were many ways to complete quest or questline.
-  - Lock a Questline, Quest or QuestStep. Useful if conflicting quest was completed/chosen.
 
 ### Conditions
 [Conditions folder](./conditions)
 
-TODO: Separate into its own system.
-
 Condition that returns value of its evaluation. May contain nested condition.
+
+- TODO:
+  - Location tracking condition - must arrive to the specific area or trigger Area3D with specific "name" or metadata.
+  - Boil down "tracking" conditions to a single condition that stores and evaluates user-defined "tracker".
+    - This would require adding new "Tracker" types.
+  - Find a way to show requirements of these conditions to the player. Including their progress.
 
 Types of conditions:
 - Built-in:
@@ -155,9 +166,6 @@ Types of conditions:
       - `rhs` - value on the right side of the compare operation.
 
 	  Notes: `lhs` and `rhs` may contain a string that resolves into an acquirable game value like player's level.
-  - `Objective_Condition` - return `TRUE` is objective is completed.
-	- Properties:
-	  - `objective` - name of the objective player must complete. Tracks player's activity and maybe some other stuff.
   - `False_Condition` and `True_Condition` - conditions that always return false and true respectively. Useful if specific entry condition needs to be set to true by a different entry's action.
 
 - QuestSystem specific
@@ -166,9 +174,6 @@ Types of conditions:
   - `PreviousSiblingEntryIsCompleted_Condition` - checks if previous entry in the same `quests`/`steps` is completed.
   - `ObjectiveCompleted_Condition` - checks if QuestStep's objective's `is_completed` flag is set.
   - `ObjectiveFailed_Condition` - checks if QuestStep's objective's `is_failed` flag is set.
-
-- TODO:
-  - Location condition - must arrive to the specific area or trigger Area3D with specific "name" or metadata.
 
 ### Objectives
 

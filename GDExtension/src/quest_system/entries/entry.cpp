@@ -231,7 +231,7 @@ void Entry::deserialize_json(const Ref<Entry> &p_entry, const Dictionary &p_json
 		if (static_cast<String>(p_json["type"]) == "step") {
 			p_entry->m_completion_condition = ObjectSerializationRegistry::get_singleton()->get_class_res("ObjectiveCompleted");
 		} else {
-			p_entry->m_completion_condition = ObjectSerializationRegistry::get_singleton()->get_class_res("AllChildEntriesComplete");
+			p_entry->m_completion_condition = ObjectSerializationRegistry::get_singleton()->get_class_res("AllChildEntriesCompleted");
 		}
 	}
 	p_entry->m_completion_condition->set_caller_id(p_entry->get_id());
