@@ -15,6 +15,12 @@
 #include "quest_system.hpp"
 #include "conditions/allchildentriescompleted_condition.hpp"
 #include "conditions/anychildentryfailed_condition.hpp"
+#include "conditions/logical_condition.hpp"
+#include "conditions/objectivecompleted_condition.hpp"
+#include "conditions/objectivefailed_condition.hpp"
+#include "conditions/true_condition.hpp"
+#include "conditions/false_condition.hpp"
+#include "conditions/previoussiblingentrycompleted_condition.hpp"
 
 using namespace godot;
 
@@ -38,12 +44,24 @@ static void initialize_gdextension_types(const ModuleInitializationLevel p_level
 	GDREGISTER_CLASS(QS::QuestlineEntry);
 	GDREGISTER_CLASS(QS::AllChildEntriesCompleted_Condition);
 	GDREGISTER_CLASS(QS::AnyChildEntryFailed_Condition);
+	GDREGISTER_CLASS(QS::ObjectiveCompleted_Condition);
+	GDREGISTER_CLASS(QS::ObjectiveFailedCondition);
+	GDREGISTER_CLASS(QS::Logical_Condition);
+	GDREGISTER_CLASS(QS::True_Condition);
+	GDREGISTER_CLASS(QS::False_Condition);
+	GDREGISTER_CLASS(QS::PreviousSiblingEntryCompleted_Condition)
 	{
 		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestlineEntry::get_class_static());
 		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestEntry::get_class_static());
 		ObjectSerializationRegistry::get_singleton()->register_classname(QS::QuestStepEntry::get_class_static());
 		ObjectSerializationRegistry::get_singleton()->register_classname(QS::AllChildEntriesCompleted_Condition::get_class_static());
 		ObjectSerializationRegistry::get_singleton()->register_classname(QS::AnyChildEntryFailed_Condition::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::ObjectiveCompleted_Condition::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::ObjectiveFailedCondition::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::Logical_Condition::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::True_Condition::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::False_Condition::get_class_static());
+		ObjectSerializationRegistry::get_singleton()->register_classname(QS::PreviousSiblingEntryCompleted_Condition::get_class_static());
 	}
 }
 

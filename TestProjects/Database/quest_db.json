@@ -21,7 +21,7 @@
 					"id": "l0q1",
 					"type": "quest",
 					"availability_condition": {
-						"type": "PreviousSiblingEntryIsCompleted",
+						"type": "PreviousSiblingEntryCompleted",
 						"comment": "Made available by previous quest on completion. TODO: automate if empty"
 					},
 					"steps": [

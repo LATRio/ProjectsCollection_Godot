@@ -71,6 +71,18 @@ add_library(${LIBNAME} SHARED
         src/quest_system/conditions/allchildentriescompleted_condition.hpp
         src/quest_system/conditions/anychildentryfailed_condition.cpp
         src/quest_system/conditions/anychildentryfailed_condition.hpp
+        src/quest_system/conditions/objectivecompleted_condition.cpp
+        src/quest_system/conditions/objectivecompleted_condition.hpp
+        src/quest_system/conditions/objectivefailed_condition.cpp
+        src/quest_system/conditions/objectivefailed_condition.hpp
+        src/quest_system/conditions/logical_condition.cpp
+        src/quest_system/conditions/logical_condition.hpp
+        src/quest_system/conditions/true_condition.cpp
+        src/quest_system/conditions/true_condition.hpp
+        src/quest_system/conditions/false_condition.cpp
+        src/quest_system/conditions/false_condition.hpp
+        src/quest_system/conditions/previoussiblingentrycompleted_condition.cpp
+        src/quest_system/conditions/previoussiblingentrycompleted_condition.hpp
 )
 
 target_include_directories(${LIBNAME} PRIVATE
