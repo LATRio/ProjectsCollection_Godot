@@ -51,4 +51,6 @@ script = ExtResource("5_kvjfl")
 
 [node name="HurtboxComponent" parent="." unique_id=1122298964 instance=ExtResource("7_rbmd0")]
 
+[node name="InventoryComponent" type="InventoryComponent" parent="." unique_id=569894637]
+
 [editable path="ThirdPersonCameraComponent"]

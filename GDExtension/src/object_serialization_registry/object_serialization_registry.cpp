@@ -1,11 +1,7 @@
 #include "object_serialization_registry.hpp"
+#include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 
-#include "godot_cpp/classes/project_settings.hpp"
-#include "godot_cpp/classes/resource_loader.hpp"
-#include "godot_cpp/classes/script.hpp"
-
-#include <godot_cpp/classes/ref.hpp>
-#include <godot_cpp/classes/resource.hpp>
 
 bool ObjectSerializationRegistry::registry_has(const String &p_name) const {
 	return m_registry.has(p_name) || m_script_registry.has(p_name);
@@ -28,7 +24,7 @@ void ObjectSerializationRegistry::register_classname(const StringName &p_classna
 	for (const auto &gclass : gclasses) {
 		Dictionary class_dict = gclass;
 		if (class_dict["class"] == p_classname) {
-			Ref<Script> script = ResourceLoader::get_singleton()->load(class_dict["path"]);
+			const Ref<Script> script = ResourceLoader::get_singleton()->load(class_dict["path"]);
 			ERR_FAIL_COND_MSG(script.is_null(), String("[ObjectSerializationRegistry] Couldn't load '{0}' script.").format(Array::make(class_dict["path"])));
 			register_script(script);
 			return;

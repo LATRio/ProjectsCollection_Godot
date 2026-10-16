@@ -83,6 +83,14 @@ add_library(${LIBNAME} SHARED
         src/quest_system/conditions/false_condition.hpp
         src/quest_system/conditions/previoussiblingentrycompleted_condition.cpp
         src/quest_system/conditions/previoussiblingentrycompleted_condition.hpp
+        src/item_system/item_data.cpp
+        src/item_system/item_data.hpp
+        src/item_system/item_stack.cpp
+        src/item_system/item_stack.hpp
+        src/item_system/inventory.cpp
+        src/item_system/inventory.hpp
+        src/components/inventory_component.cpp
+        src/components/inventory_component.hpp
 )
 
 target_include_directories(${LIBNAME} PRIVATE

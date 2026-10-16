@@ -1,0 +1,7 @@
+[gd_resource type="ItemData" format=3 uid="uid://bgfxcdlvuk1dm"]
+
+[resource]
+id = &"bronze_plank"
+item_name = "Bronze Plank"
+item_desc = "Some bronze plank on the floor. Can only store 5 per stack."
+stack_max_size = 5

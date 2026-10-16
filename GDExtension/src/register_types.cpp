@@ -6,21 +6,25 @@
 #include <godot_cpp/classes/engine.hpp>
 
 #include "actions/action.hpp"
-#include "conditions/condition.hpp"
-#include "entries/quest_entry.hpp"
-#include "entries/quest_step_entry.hpp"
-#include "entries/questline_entry.hpp"
-#include "object_serialization_registry/object_serialization_registry.hpp"
-#include "objectives/objective.hpp"
-#include "quest_system.hpp"
+#include "components/inventory_component.hpp"
 #include "conditions/allchildentriescompleted_condition.hpp"
 #include "conditions/anychildentryfailed_condition.hpp"
+#include "conditions/condition.hpp"
+#include "conditions/false_condition.hpp"
 #include "conditions/logical_condition.hpp"
 #include "conditions/objectivecompleted_condition.hpp"
 #include "conditions/objectivefailed_condition.hpp"
-#include "conditions/true_condition.hpp"
-#include "conditions/false_condition.hpp"
 #include "conditions/previoussiblingentrycompleted_condition.hpp"
+#include "conditions/true_condition.hpp"
+#include "entries/quest_entry.hpp"
+#include "entries/quest_step_entry.hpp"
+#include "entries/questline_entry.hpp"
+#include "item_system/inventory.hpp"
+#include "item_system/item_data.hpp"
+#include "item_system/item_stack.hpp"
+#include "object_serialization_registry/object_serialization_registry.hpp"
+#include "objectives/objective.hpp"
+#include "quest_system.hpp"
 
 using namespace godot;
 
@@ -29,6 +33,11 @@ static void initialize_gdextension_types(const ModuleInitializationLevel p_level
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
+	GDREGISTER_CLASS(IS::ItemData);
+	GDREGISTER_CLASS(IS::ItemStack);
+	GDREGISTER_CLASS(IS::Inventory);
+	GDREGISTER_CLASS(InventoryComponent);
+
 	GDREGISTER_CLASS(QS::QuestSystem);
 	GDREGISTER_CLASS(ObjectSerializationRegistry);
 	QS::QuestSystem::create_singleton();

@@ -14,6 +14,9 @@ var track_me_pressed := false
 
 var mouse_out_of_window := false
 
+var add_item_pressed := false
+var remove_item_pressed := false
+
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -51,3 +54,5 @@ func update() -> void:
 	interact_pressed = Input.is_action_just_pressed("interact")
 	attack_pressed = Input.is_action_just_pressed("attack")
 	track_me_pressed = Input.is_action_just_pressed("track_me")
+	add_item_pressed = Input.is_action_just_pressed("add_item")
+	remove_item_pressed = Input.is_action_just_pressed("remove_item")

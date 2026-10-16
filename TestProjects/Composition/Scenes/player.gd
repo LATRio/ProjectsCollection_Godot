@@ -1,11 +1,14 @@
 class_name Player
 extends CharacterBody3D
 
+const BRONZE_PLANK = preload("uid://bgfxcdlvuk1dm")
+
 @onready var input_component: InputComponent = %InputComponent
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var third_person_camera_component: ThirdPersonCameraComponent = $ThirdPersonCameraComponent
 @onready var interactor_component: InteractorComponent = $InteractorComponent
+@onready var inventory_component: InventoryComponent = $InventoryComponent
 @onready var character_scene: CharacterScene = $CharacterScene
 
 
@@ -34,6 +37,14 @@ func _physics_process(delta: float) -> void:
 	movement_component.wants_jump = input_component.jump_pressed
 	movement_component.root_motion_position = character_scene.anim_tree.get_root_motion_position()
 	movement_component.tick(delta)
+	
+	# PROCESS INVENTORY
+	if input_component.add_item_pressed:
+		inventory_component.add_item(BRONZE_PLANK, 2)
+		inventory_component.print_inventory()
+	if input_component.remove_item_pressed:
+		inventory_component.remove_item(BRONZE_PLANK, 2)
+		inventory_component.print_inventory()
 	
 	# PROCESS HEALTH
 	if input_component.heal_pressed:
